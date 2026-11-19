@@ -1,0 +1,58 @@
+<!doctype html>
+<!-- Blog post image (1200x630): the share preview, the thumbnail in the blog list and the
+     image at the top of the post. The title comes from ?title=…
+     Render every published post with: node scripts/render-og.mjs
+     Style "I · Cobalt + sheet card", chosen by the owner Nov 1, 2026 (design/og/options2.html). -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face { font-family: "Hanken"; src: url("../../site/node_modules/@fontsource-variable/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; }
+  :root { --ground: #f3f4f2; --sheet: #fff; --ink: #17181a; --mute: #63666b; --tone1: #e8e9e6; --cobalt: #2449f5; --match: #dbe2ff; }
+  * { box-sizing: border-box; margin: 0; }
+  body { width: 1200px; height: 630px; overflow: hidden; font-family: "Hanken", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .card { position: relative; height: 100%; background: var(--cobalt); color: #fff; padding: 64px 72px; }
+  .brand { display: flex; align-items: center; gap: 14px; font-size: 30px; font-weight: 600; letter-spacing: -0.01em; }
+  .brand img { width: 52px; height: 52px; filter: brightness(0) invert(1); }
+  h1 { font-size: 64px; max-width: 600px; margin-top: 62px; font-weight: 500; letter-spacing: -0.035em; line-height: 1.05; text-wrap: balance; }
+  .url { position: absolute; left: 72px; bottom: 60px; font-size: 27px; font-weight: 600; letter-spacing: -0.01em; }
+  /* A complete little sheet: header row, row numbers near 18 million, one highlighted row. */
+  .sheet { position: absolute; right: 72px; top: 64px; bottom: 64px; width: 420px; display: flex; flex-direction: column; background: var(--sheet); color: var(--ink); border-radius: 12px; overflow: hidden; box-shadow: 0 30px 60px -30px #0b1a6baa; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .r { flex: 1; display: grid; grid-template-columns: 104px repeat(3, 1fr); align-items: center; border-bottom: 1px solid #ecedea; }
+  .r:last-child { border-bottom: 0; }
+  .r > * { padding: 0 12px; }
+  .n { background: var(--ground); color: var(--mute); height: 100%; display: flex; align-items: center; justify-content: flex-end; }
+  .hd { background: var(--ground); color: var(--mute); font-weight: 500; }
+  i { display: block; height: 9px; border-radius: 5px; background: var(--tone1); }
+  .on { background: var(--match); }
+  .on .n { background: #e6eafd; color: var(--cobalt); font-weight: 600; }
+  .on i { background: var(--cobalt); opacity: .55; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="brand"><img src="../logo/kit/svg/whale.svg" alt="" />MegaCSV</div>
+  <h1 id="t">Post title</h1>
+  <span class="url">megacsv.com</span>
+  <div class="sheet" id="sheet" aria-hidden="true"></div>
+</div>
+<script>
+  const widths = [72, 55, 84, 66, 46, 76, 60, 68, 42, 74, 58, 80];
+  let html = '<div class="r hd"><span class="n"></span><span>A</span><span>B</span><span>C</span></div>';
+  for (let k = 0; k < 10; k++) {
+    const cells = [0, 1, 2].map((c) => `<span><i style="width:${widths[(k * 3 + c) % widths.length]}%"></i></span>`).join("");
+    html += `<div class="r${k === 4 ? " on" : ""}"><span class="n">${(18402113 + k).toLocaleString("en-US")}</span>${cells}</div>`;
+  }
+  document.getElementById("sheet").innerHTML = html;
+  const t = new URLSearchParams(location.search).get("title");
+  const h1 = document.getElementById("t");
+  if (t) h1.textContent = t;
+  // Shrink long titles until they fit above the URL.
+  document.fonts.ready.then(() => {
+    let size = 64;
+    while (h1.scrollHeight > 330 && size > 40) h1.style.fontSize = `${(size -= 3)}px`;
+    document.body.dataset.ready = "1";
+  });
+</script>
+</body>
+</html>

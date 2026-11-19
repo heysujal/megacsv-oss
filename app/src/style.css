@@ -1,0 +1,270 @@
+@import "tailwindcss";
+@import "@fontsource-variable/hanken-grotesk/wght.css";
+
+/* Quiet Office (DESIGN.md). Light by default; dark from the system setting, or
+   from the site's saved choice (.light / .dark on <html>, key "megacsv-theme"). */
+:root {
+  --ground: #f3f4f2;
+  --sheet: #ffffff;
+  --ink: #17181a;
+  --ink-muted: #63666b;
+  --tone-1: #e8e9e6;
+  --tone-2: #dcdedb;
+  --hairline: #e2e3e0;
+  --cobalt: #2449f5;
+  --on-cobalt: #ffffff;
+  --match: #dbe2ff;
+  --warning: #c2410c;
+  --shadow-float: 0 24px 48px -24px #0003, 0 0 0 1px var(--hairline);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --ground: #111214;
+    --sheet: #17181b;
+    --ink: #e9eaec;
+    --ink-muted: #9a9da3;
+    --tone-1: #1d1e22;
+    --tone-2: #27292d;
+    --hairline: #24262a;
+    --cobalt: #6f8bff;
+    --on-cobalt: #0b0c10;
+    --match: #1e2a5c;
+    --warning: #fb923c;
+    --shadow-float: 0 24px 48px -24px #000a, 0 0 0 1px var(--hairline);
+    color-scheme: dark;
+  }
+}
+
+:root.dark {
+  --ground: #111214;
+  --sheet: #17181b;
+  --ink: #e9eaec;
+  --ink-muted: #9a9da3;
+  --tone-1: #1d1e22;
+  --tone-2: #27292d;
+  --hairline: #24262a;
+  --cobalt: #6f8bff;
+  --on-cobalt: #0b0c10;
+  --match: #1e2a5c;
+  --warning: #fb923c;
+  --shadow-float: 0 24px 48px -24px #000a, 0 0 0 1px var(--hairline);
+  color-scheme: dark;
+}
+
+:root {
+  /* Read by the canvas grid (src/grid/grid.ts). */
+  --grid-bg: var(--sheet);
+  --grid-text: var(--ink);
+  --grid-muted: var(--ink-muted);
+  --grid-line: color-mix(in oklab, var(--hairline) 70%, transparent);
+  --grid-header-bg: var(--ground);
+  --grid-names-bg: var(--sheet);
+  --grid-selected: color-mix(in oklab, var(--cobalt) 12%, transparent);
+  --grid-accent: var(--cobalt);
+  --grid-bar: var(--sheet);
+  --grid-thumb: var(--tone-2);
+  --grid-highlight: var(--match);
+}
+
+@theme inline {
+  --font-sans: "Hanken Grotesk Variable", system-ui, sans-serif;
+  --color-ground: var(--ground);
+  --color-sheet: var(--sheet);
+  --color-ink: var(--ink);
+  --color-muted: var(--ink-muted);
+  --color-tone-1: var(--tone-1);
+  --color-tone-2: var(--tone-2);
+  --color-hairline: var(--hairline);
+  --color-cobalt: var(--cobalt);
+  --color-on-cobalt: var(--on-cobalt);
+  --color-match: var(--match);
+  --color-warning: var(--warning);
+  --radius-token: 6px;
+  --radius-control: 8px;
+  --radius-panel: 12px;
+  --radius-window: 14px;
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+  --shadow-float: var(--shadow-float);
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
+  }
+  [hidden] {
+    display: none !important;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--cobalt) 25%, transparent);
+  }
+  :focus-visible {
+    outline: 2px solid var(--cobalt);
+    outline-offset: 2px;
+  }
+  input,
+  textarea,
+  select {
+    caret-color: var(--cobalt);
+    accent-color: var(--cobalt);
+  }
+  button {
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  button:disabled {
+    cursor: default;
+  }
+  * {
+    scrollbar-color: var(--tone-2) transparent;
+  }
+}
+
+@layer components {
+  /* Native <select>, styled; keeps the browser's own list (keyboard, phones, tests). */
+  .select {
+    appearance: none;
+    background-color: var(--sheet);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath fill='none' stroke='%2363666b' stroke-width='20' stroke-linecap='round' stroke-linejoin='round' d='M208 96l-80 80-80-80'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    padding-right: 30px;
+  }
+  /* Filter tokens: a select or field inside the filter sentence. */
+  .token {
+    appearance: none;
+    border: 0;
+    border-radius: var(--radius-token);
+    background-color: var(--tone-1);
+    color: var(--cobalt);
+    font: inherit;
+    padding: 2px 8px;
+    min-height: 30px;
+    field-sizing: content;
+    transition: background-color 120ms;
+  }
+  .token:hover {
+    background-color: var(--tone-2);
+  }
+  select.token {
+    padding-right: 24px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath fill='none' stroke='%2363666b' stroke-width='20' stroke-linecap='round' stroke-linejoin='round' d='M208 96l-80 80-80-80'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 7px center;
+    background-size: 10px;
+    max-width: 24ch;
+    text-overflow: ellipsis;
+  }
+  input.token::placeholder,
+  textarea.token::placeholder {
+    color: color-mix(in oklab, var(--cobalt) 55%, var(--ink-muted));
+  }
+  .sr-only-table {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+dialog.app-dialog {
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-panel);
+  background: var(--sheet);
+  color: var(--ink);
+  box-shadow: var(--shadow-float);
+  max-height: min(88vh, 900px);
+  overscroll-behavior: contain;
+}
+dialog.app-dialog::backdrop {
+  background: color-mix(in oklab, var(--ground) 55%, #0000);
+  backdrop-filter: blur(1px);
+}
+dialog.app-dialog[open] {
+  animation: dialog-in 200ms var(--ease-out-quint);
+}
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+@media (max-width: 640px) {
+  dialog.app-dialog {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    border-radius: 0;
+  }
+}
+
+/* Phones zoom into any field under 16px when it's tapped. */
+@media (max-width: 640px) {
+  input,
+  select,
+  textarea,
+  .token {
+    font-size: 16px !important;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Export finished: the check mark pops in and draws itself. */
+.export-done-mark {
+  animation: done-pop 420ms var(--ease-out-quint);
+}
+.export-done-mark path {
+  stroke-dasharray: 36;
+  animation: done-draw 420ms 140ms var(--ease-out-quint) both;
+}
+@keyframes done-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+@keyframes done-draw {
+  from {
+    stroke-dashoffset: 36;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog.app-dialog[open] {
+    animation: fade-in 150ms linear;
+  }
+  .export-done-mark,
+  .export-done-mark path {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-property: opacity, background-color, color !important;
+  }
+}

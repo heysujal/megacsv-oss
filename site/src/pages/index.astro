@@ -1,0 +1,175 @@
+---
+import Base from "../layouts/Base.astro";
+import AppPreview from "../components/AppPreview.astro";
+import BestIn from "../components/BestIn.astro";
+import { APP_URL, SAMPLE_URL, COMPARE, FACTS, FAQ, PROBLEMS, SIDE_BY_SIDE, RACE, TESTED_ON, VOICES, WHO } from "../data/home";
+import { liveGuideLinks } from "../lib/live";
+
+const live = await liveGuideLinks();
+
+const description =
+  "Open CSV files with millions of rows, find and filter them without formulas, and export the rows you need back to Excel. Free, no signup.";
+
+const jsonld = [
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "MegaCSV",
+    url: "https://megacsv.com/",
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Windows, macOS, Linux, ChromeOS",
+    description: "Open CSV files too big for Excel, find and filter rows without formulas, and export them back to Excel.",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "MegaCSV",
+    url: "https://megacsv.com/",
+    logo: "https://megacsv.com/icon-512.png",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQ.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
+  },
+];
+
+// Square-root scale so MegaCSV's bar is still visible next to a 33-minute upload.
+const slowest = Math.max(...RACE.map(([, s]) => s));
+const barWidth = (s: number) => `${(100 * Math.sqrt(s / slowest)).toFixed(1)}%`;
+---
+
+<Base title="MegaCSV · Open CSV files too big for Excel" {description} {jsonld}>
+  <div class="col hero">
+    <h1>Open CSV files too big for Excel.</h1>
+    <p class="lede">Find the rows you need and take them back to Excel. <span>Free, with no signup.</span></p>
+    <p class="proof"><span>48 million rows on screen in 0.1 s</span><span>Your file is never uploaded</span></p>
+    <div class="dropzone">
+      <p class="droptext">Drop a CSV file here, or</p>
+      <div class="ctas">
+        <a class="btn primary" href={APP_URL} data-cta="hero" data-open>Open a CSV file</a>
+        <a class="btn" href={SAMPLE_URL} data-cta="sample">Try a sample file</a>
+      </div>
+    </div>
+    <BestIn />
+  </div>
+
+  <div class="col wide">
+    <AppPreview caption="transactions_q3.csv · 5 GB · 48,273,485 rows" href={SAMPLE_URL} />
+  </div>
+
+  <div class="col">
+    <section>
+      <h2>When Excel says no</h2>
+      <blockquote class="error"><small>Microsoft Excel</small>This data set is too large for the Excel grid. If you save this workbook, you'll lose data that wasn't loaded.</blockquote>
+      <p>Excel stops at 1,048,576 rows. MegaCSV opens every row, however many there are, and it looks the way you expect: rows, columns, a formula bar and sheet tabs, with the true row number on every row.</p>
+    </section>
+
+    <section>
+      <h2>Other messages it gets you past</h2>
+      <ul class="problems">{PROBLEMS.map(([app, msg, page]) => <li><small>{app}</small>{live.has(page) ? <a href={live.get(page)!.href}>{msg}</a> : msg}</li>)}</ul>
+    </section>
+
+    <section>
+      <h2>Your rows on screen in a tenth of a second.</h2>
+      <p>A 5 GB file with 48 million rows shows its first rows in 0.1 s and is read to the last row in 5.1 s, ready to scroll, search and filter. Excel stops at 1,048,576 rows, about 2% of that file.</p>
+      <h3>Seconds until you see your data</h3>
+      <p class="m">Opening a 5 GB CSV. Scale is compressed so MegaCSV's bars are visible.</p>
+      <ul class="race">
+        {RACE.map(([who, secs, label]) => (
+          <li class={who.startsWith("MegaCSV") ? "us" : undefined}>
+            <span class="who">{who}</span>
+            <span class="bar" aria-hidden="true"><i style={`width:${barWidth(secs)}`}></i></span>
+            <span class="lbl">{label}</span>
+          </li>
+        ))}
+      </ul>
+      <h3>Side by side</h3>
+      <div class="tablewrap">
+        <table class="compare side">
+          <thead><tr><td></td><th scope="col">MegaCSV</th><th scope="col">The usual way</th></tr></thead>
+          <tbody>{SIDE_BY_SIDE.map(([what, us, them]) => <tr><th scope="row">{what}</th><td>{us}</td><td>{them}</td></tr>)}</tbody>
+        </table>
+      </div>
+      <p class="m small">MegaCSV figures measured on a {TESTED_ON}.</p>
+    </section>
+
+    <section id="how">
+      <h2>Three steps, no formulas</h2>
+      <ol class="steps">
+        <li><b>Choose your file.</b> Rows appear while the rest is still being read.</li>
+        <li><b>Say what you're looking for.</b> <span class="sentence inline">Show rows where <span class="tok">vendor</span> contains <span class="tok">Acme</span></span></li>
+        <li><b>Export to Excel.</b> The result opens as its own sheet tab, with all rows one click away. 12,408 rows fit in one sheet; bigger results are split for you.</li>
+      </ol>
+    </section>
+
+    <section class="feature">
+      <h2>Ask for the rows in plain words</h2>
+      <p>Filters read as one sentence. Pick a column, a condition and a value; add as many conditions as you need, and a row shows when it meets all of them.</p>
+      <p class="sentence">Show rows where <span class="tok">vendor</span> contains <span class="tok">Acme</span> and <span class="tok">amount</span> is a number between <span class="tok">10,000</span> and <span class="tok">50,000</span></p>
+      <p class="m">No formulas, no code. Each result opens as its own sheet tab; export it to Excel, and results bigger than one sheet are split for you.</p>
+    </section>
+
+    <section class="feature">
+      <h2>Split it for an import</h2>
+      <p>Parts of 1,048,575 rows for Excel, 50,000 for Salesforce or 25,000 for NetSuite, each with the header row. Quotes and line breaks inside cells stay intact.</p>
+    </section>
+
+    <section class="feature">
+      <h2>Keep your values as they are</h2>
+      <p>Leading zeros, long account numbers and dates stay exactly as written, in the grid and in the Excel file you export.</p>
+    </section>
+
+    <section>
+      <h2>How it compares</h2>
+      <div class="tablewrap">
+        <table class="compare">
+          <thead><tr><td></td>{COMPARE.tools.map((t) => <th scope="col">{t}</th>)}</tr></thead>
+          <tbody>
+            {COMPARE.rows.map(([label, ...cells]) => (
+              <tr><th scope="row">{label}</th>{cells.map((c) => <td>{c}</td>)}</tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="voices">
+      <h2>Excel gave up. Now what?</h2>
+      <p>The same questions come up every day on Reddit and under YouTube tutorials. Here's what people said, and what MegaCSV does about it.</p>
+      {VOICES.map(([quote, who, answer]) => (
+        <figure>
+          <blockquote>“{quote}”</blockquote>
+          <figcaption>{who}</figcaption>
+          <p>{answer}</p>
+        </figure>
+      ))}
+    </section>
+
+    <section>
+      <h2>Who it's for</h2>
+      <p>Anyone handed a CSV that Excel can't hold.</p>
+      <dl class="who">{WHO.map(([who, files]) => <div><dt>{who}</dt><dd>{files}</dd></div>)}</dl>
+    </section>
+
+    <section>
+      <h2>At a glance</h2>
+      <dl class="facts">{FACTS.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
+    </section>
+
+    <section id="faq">
+      <h2>Questions</h2>
+      <div class="faq">{FAQ.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}</div>
+    </section>
+
+    <section class="closing">
+      <h2>Open your file now.</h2>
+      <div class="ctas"><a class="btn primary" href={APP_URL} data-cta="closing" data-open>Open a CSV file</a></div>
+      <BestIn />
+    </section>
+  </div>
+
+  <div class="dropveil" hidden><p>Drop your CSV file to open it</p></div>
+  <script src="../scripts/home-open.ts"></script>
+</Base>

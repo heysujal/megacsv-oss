@@ -1,0 +1,2 @@
+{"commit":"","file":"testdata/1gb.csv","bytes":1073741883,"scan_mbps":2991,"naive_mbps":1729,"index_mbps":3743,"threads":7,"rows":9732076}
+{"commit":"","file":"testdata/5gb.csv","bytes":5368709233,"scan_mbps":2338,"naive_mbps":1770,"index_mbps":2614,"threads":7,"rows":48273485}

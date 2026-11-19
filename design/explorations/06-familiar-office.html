@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MegaCSV · 06 Familiar office</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="base.css" />
+<style>
+:root { --font: Figtree, system-ui, sans-serif; --bg: #ffffff; --ink: #1b1f23; --mute: #5d6670; --step: #f3f5f6; --step2: #e7ebee; --line: #e1e5e8;
+  --accent: #0f766e; --on-accent: #fff; --hit: #fff1a8; --btn-r: 8px; --hero: #e6f3f1; }
+.dark { --bg: #15181b; --ink: #e8ebee; --mute: #9aa4ad; --step: #1d2125; --step2: #272c31; --line: #2a2f34; --accent: #2dd4bf; --on-accent: #062b27; --hit: #4d4210; --hero: #10221f; }
+.wrap { max-width: 1260px; margin: 0 auto; padding: 0 32px; }
+nav.top { display: flex; align-items: center; gap: 26px; height: 72px; }
+.mark { font-weight: 800; font-size: 21px; letter-spacing: -0.02em; display: flex; gap: 10px; align-items: center; }
+.mark i { width: 26px; height: 26px; border-radius: 7px; background: var(--accent); display: grid; place-items: center; color: var(--on-accent); font-style: normal; font-size: 13px; font-weight: 800; }
+nav.top a { color: var(--mute); text-decoration: none; font-weight: 500; }
+nav.top .sp { flex: 1; }
+.herofield { background: var(--hero); }
+.hero { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 48px; align-items: center; padding: 64px 0 72px; }
+h1 { font-size: clamp(46px, 5.4vw, 80px); line-height: 1; letter-spacing: -0.04em; font-weight: 800; }
+.lede { font-size: 20px; line-height: 1.5; margin-top: 22px; max-width: 32ch; }
+.ctas { display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap; }
+.trust { display: flex; gap: 18px; margin-top: 28px; color: var(--mute); font-size: 15px; flex-wrap: wrap; }
+.trust span { display: inline-flex; gap: 6px; align-items: center; }
+/* familiar window */
+.win { background: var(--bg); border-radius: 12px; box-shadow: 0 24px 48px -24px #0f766e55, 0 0 0 1px var(--line); overflow: hidden; font-size: 13px; }
+.ribbon { display: flex; gap: 4px; padding: 8px 10px; background: var(--step); align-items: center; }
+.ribbon .tab { padding: 6px 10px; border-radius: 6px; color: var(--mute); font-weight: 500; }
+.ribbon .tab.on { background: var(--bg); color: var(--ink); box-shadow: 0 1px 2px #0001; }
+.tools { display: flex; gap: 4px; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+.tool { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 8px; min-width: 64px; font-size: 12px; color: var(--ink); background: none; border: 0; cursor: pointer; }
+.tool:hover { background: var(--step); }
+.tool .icon { width: 20px; height: 20px; color: var(--accent); }
+.tool.big { background: var(--accent); color: var(--on-accent); }
+.tool.big .icon { color: var(--on-accent); }
+.tools .sep { width: 1px; background: var(--line); margin: 4px 6px; }
+.fbar { display: grid; grid-template-columns: 130px 28px 1fr; border-bottom: 1px solid var(--line); height: 30px; align-items: center; }
+.fbar .name { padding: 0 10px; font-weight: 600; border-right: 1px solid var(--line); height: 100%; display: flex; align-items: center; font-variant-numeric: tabular-nums; }
+.fbar .fx { color: var(--mute); font-style: italic; text-align: center; }
+.fbar .val { padding: 0 10px; }
+.win .sheet { height: 300px; overflow: hidden; }
+.tabs { display: flex; gap: 2px; padding: 0 8px; background: var(--step); border-top: 1px solid var(--line); height: 34px; align-items: stretch; font-size: 13px; }
+.tabs span { padding: 0 14px; display: flex; align-items: center; gap: 6px; color: var(--mute); }
+.tabs span.on { background: var(--bg); color: var(--accent); font-weight: 600; box-shadow: inset 0 2px 0 var(--accent); }
+.tabs .sp { flex: 1; }
+table[data-grid] { --row-h: 26px; font-size: 13px; }
+table[data-grid] th, table[data-grid] td { border-right: 1px solid var(--line); padding: 0 8px; }
+table[data-grid] thead tr.letters th { background: var(--step); color: var(--mute); }
+table[data-grid] thead tr.names th { background: var(--bg); }
+table[data-grid] .rn { min-width: 84px; }
+section.band { padding: 140px 0 0; }
+h2 { font-size: clamp(34px, 3.8vw, 54px); line-height: 1.04; letter-spacing: -0.035em; font-weight: 800; max-width: 18ch; }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 44px; }
+.compare > div { border-radius: 16px; padding: 28px; background: var(--step); }
+.compare > div:last-child { background: var(--hero); }
+.compare h3 { font-size: 20px; }
+.compare ul { margin: 16px 0 0; padding-left: 20px; line-height: 1.9; font-size: 17px; }
+.compare .q { margin-top: 14px; font-size: 16px; line-height: 1.5; color: var(--mute); }
+.jobs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 44px; }
+.jobs a { text-decoration: none; background: var(--step); border-radius: 16px; padding: 22px; min-height: 170px; display: flex; flex-direction: column; gap: 8px; transition: transform 160ms var(--ease); }
+.jobs a:active { transform: scale(0.98); }
+.jobs b { font-size: 19px; }
+.jobs span { color: var(--mute); line-height: 1.45; }
+.jobs .go { margin-top: auto; color: var(--accent); font-weight: 600; }
+.faq { display: grid; grid-template-columns: 1fr 1.5fr; gap: 56px; }
+details { padding: 20px 0; border-bottom: 1px solid var(--line); }
+summary { font-size: 19px; font-weight: 600; }
+details p { margin-top: 8px; color: var(--mute); line-height: 1.55; }
+footer { margin-top: 140px; padding: 48px 0 28px; background: var(--hero); }
+footer .big { font-size: clamp(64px, 14vw, 200px); font-weight: 800; letter-spacing: -0.055em; line-height: 0.85; color: var(--accent); }
+footer .row { display: flex; justify-content: space-between; margin-top: 24px; color: var(--mute); font-size: 14px; }
+
+/* app */
+.app .top2 { display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: var(--step); }
+.app .top2 .t { font-weight: 700; }
+.app .top2 .t span { color: var(--mute); font-weight: 400; margin-left: 8px; font-variant-numeric: tabular-nums; }
+.app .top2 .sp { flex: 1; }
+.app .top2 .find { background: var(--bg); width: 320px; height: 34px; border-radius: 8px; }
+.app .tools { background: var(--bg); }
+.app .sheet { flex: 1; min-height: 0; overflow: hidden; }
+.app table[data-grid] { --row-h: 28px; }
+.app .tabs { height: 38px; }
+.status { display: flex; gap: 22px; padding: 6px 12px; font-size: 12px; background: var(--accent); color: var(--on-accent); }
+.status .sp { flex: 1; }
+@media (max-width: 860px) { .hero, .compare, .faq { grid-template-columns: 1fr; } .jobs { grid-template-columns: 1fr 1fr; } nav.top a { display: none; } }
+</style>
+</head>
+<body>
+<div class="home">
+  <div class="herofield">
+    <div class="wrap">
+      <nav class="top">
+        <div class="mark"><i>M</i>MegaCSV</div>
+        <a href="#how">How it works</a><a href="#jobs">What you can do</a><a href="#faq">Questions</a><a href="#">Guides</a>
+        <span class="sp"></span>
+        <button class="iconbtn" data-action="theme" aria-label="Switch light or dark" style="background:var(--bg)"><svg class="icon"><use href="#i-theme"/></svg></button>
+        <button class="btn ink" data-action="pick">Open a file</button>
+      </nav>
+      <header class="hero">
+        <div>
+          <h1>Open CSV files too big for Excel.</h1>
+          <p class="lede">It works the way you already do: find, filter, then export the rows you need back to Excel.</p>
+          <div class="ctas"><button class="btn primary" data-action="pick"><svg class="icon"><use href="#i-up"/></svg>Choose a CSV file</button><button class="btn" data-action="open" data-file="sample_transactions.csv" style="background:var(--bg)">Try a sample file</button></div>
+          <div class="trust"><span><svg class="icon"><use href="#i-lock"/></svg>Nothing uploaded</span><span><svg class="icon"><use href="#i-wifi"/></svg>Works offline</span><span><svg class="icon"><use href="#i-gift"/></svg>Free, no signup</span></div>
+        </div>
+        <div class="win">
+          <div class="ribbon"><span class="tab on">Home</span><span class="tab">Find</span><span class="tab">Filter</span><span class="tab">Export</span><span style="flex:1"></span><span style="color:var(--mute)">transactions_q3.csv · <span data-count-home="48273485">0</span> rows</span></div>
+          <div class="tools">
+            <button class="tool"><svg class="icon"><use href="#i-search"/></svg>Find</button>
+            <button class="tool"><svg class="icon"><use href="#i-filter"/></svg>Filter</button>
+            <button class="tool"><svg class="icon"><use href="#i-cols"/></svg>Columns</button>
+            <span class="sep"></span>
+            <button class="tool"><svg class="icon"><use href="#i-split"/></svg>Split</button>
+            <button class="tool big" data-action="open" data-file="sample_transactions.csv"><svg class="icon"><use href="#i-down"/></svg>To Excel</button>
+          </div>
+          <div class="fbar"><span class="name">C18,402,116</span><span class="fx">fx</span><span class="val">Acme Industrial Supply</span></div>
+          <div class="sheet"><div class="scroller" style="overflow:hidden"><table data-grid data-letters></table></div></div>
+          <div class="tabs"><span class="on">Acme Q3 · 12,408 rows</span><span>All rows · 48,273,485</span><span class="sp"></span></div>
+        </div>
+      </header>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <section class="band" id="how">
+      <h2>Same moves as Excel. No row limit.</h2>
+      <div class="compare">
+        <div><h3>Excel with a 6 GB file</h3><ul><li>Stops at 1,048,576 rows</li><li>“Not responding” for minutes</li><li>Leading zeros and dates changed</li></ul><p class="q">“This data set is too large for the Excel grid. If you save this workbook, you'll lose data that wasn't loaded.”</p></div>
+        <div><h3>MegaCSV with the same file</h3><ul><li>Every row, opened in seconds*</li><li>Find and filter across the whole file</li><li>Values exactly as they are in the file</li></ul><p class="q">Then export just the rows you need, split into Excel-sized parts when needed.</p></div>
+      </div>
+    </section>
+    <section class="band" id="jobs">
+      <h2>What do you need to do?</h2>
+      <div class="jobs">
+        <a href="#"><b>Look inside a huge file</b><span>Check it's the right file before you do anything else.</span><span class="go">Open a file →</span></a>
+        <a href="#"><b>Pull rows for one vendor</b><span>Filter by name, date or amount. No formulas.</span><span class="go">Filter a CSV →</span></a>
+        <a href="#"><b>Split for an import</b><span>Salesforce 50,000, NetSuite 25,000 or Excel-sized parts.</span><span class="go">Split a CSV →</span></a>
+        <a href="#"><b>Convert to Excel</b><span>Get .xlsx files that open cleanly, header on every sheet.</span><span class="go">CSV to Excel →</span></a>
+      </div>
+    </section>
+    <section class="band faq" id="faq">
+      <h2>Questions</h2>
+      <div>
+        <details open><summary>Is my file uploaded?</summary><p>No. Your browser reads it on this computer. Turn off Wi-Fi and it still works.</p></details>
+        <details><summary>How big can the file be?</summary><p>Tens of gigabytes. The limit is your disk, not Excel.</p></details>
+        <details><summary>Does it work on a work laptop?</summary><p>Yes. Nothing to install, so no IT ticket. It runs in Chrome, Edge, Firefox and Safari.</p></details>
+      </div>
+    </section>
+  </div>
+  <footer><div class="wrap"><div class="big">MegaCSV</div><div class="row"><span>Free CSV viewer for files too big for Excel</span><span>* Placeholder figure, to be measured before launch</span></div></div></footer>
+</div>
+
+<div class="app">
+  <div class="top2">
+    <button class="iconbtn" data-action="home" aria-label="Back to home" style="background:var(--bg)"><svg class="icon"><use href="#i-back"/></svg></button>
+    <div class="t" data-filename>transactions_2026_Q3.csv</div><span style="color:var(--mute)" class="tnum">6.2 GB · <span data-count-app="48273485">0</span> rows</span>
+    <span class="sp"></span>
+    <label class="find"><svg class="icon"><use href="#i-search"/></svg><input data-find placeholder="Find in the whole file" /><span class="hits" data-hits></span><kbd>Ctrl F</kbd></label>
+    <button class="iconbtn" data-action="theme" aria-label="Switch light or dark" style="background:var(--bg)"><svg class="icon"><use href="#i-theme"/></svg></button>
+  </div>
+  <div class="tools">
+    <button class="tool"><svg class="icon"><use href="#i-search"/></svg>Find</button>
+    <button class="tool"><svg class="icon"><use href="#i-filter"/></svg>Filter</button>
+    <button class="tool"><svg class="icon"><use href="#i-cols"/></svg>Columns</button>
+    <button class="tool"><svg class="icon"><use href="#i-back" style="transform:rotate(-90deg);transform-origin:center"/></svg>Go to row</button>
+    <span class="sep"></span>
+    <button class="tool"><svg class="icon"><use href="#i-split"/></svg>Split</button>
+    <button class="tool"><svg class="icon"><use href="#i-file"/></svg>Save CSV</button>
+    <button class="tool big"><svg class="icon"><use href="#i-down"/></svg>To Excel</button>
+  </div>
+  <div class="fbar"><span class="name">C18,402,116</span><span class="fx">fx</span><span class="val">Soylent Foods</span></div>
+  <div class="sheet"><div class="scroller"><table data-grid data-letters></table></div></div>
+  <div class="tabs"><span class="on"><svg class="icon" style="width:14px;height:14px"><use href="#i-filter"/></svg><span>Acme Q3 · <span data-count-app="12408">0</span> rows</span></span><span>All rows · 48,273,485</span><span>+</span><span class="sp"></span></div>
+  <div class="status"><span>Ready</span><span>Comma separated · UTF-8</span><span class="sp"></span><span>Your file stays on this computer</span></div>
+</div>
+
+<div class="loader"><div class="box"><div class="n" data-loading-count>0</div><p>rows found in <span data-filename>transactions_2026_Q3.csv</span></p><div class="bar"><i data-progress></i></div></div></div>
+<div class="dropveil">Drop to open</div>
+<script src="shared.js"></script>
+</body>
+</html>

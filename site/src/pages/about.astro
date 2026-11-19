@@ -1,0 +1,27 @@
+---
+import Page from "../components/Page.astro";
+import { APP_URL, TESTED_ON } from "../data/home";
+---
+
+<Page
+  title="About MegaCSV"
+  description="Why MegaCSV exists: a free browser app for people whose CSV files are too big for Excel, built to open any size in seconds and hand the rows back to Excel."
+  heading="About MegaCSV"
+>
+  <p>MegaCSV is a free web app that opens CSV files too big for Excel. You open a file in your browser, find or filter the rows you need, and export them back to Excel or CSV.</p>
+
+  <h2>Why it exists</h2>
+  <p>Excel stops at 1,048,576 rows. Every week people ask on Reddit, YouTube and forums what to do with an export that's bigger than that: an ERP dump for month-end, a database migration, a test rig that logged all night, a public dataset. The answers usually involve Power Query, Python or uploading the file to an online tool. Most of the people asking are not programmers. They need to see the data, pull out part of it and get back to Excel.</p>
+  <p>MegaCSV is built for them. There's nothing to install and no account, so it works on a locked-down work laptop, and the file is never uploaded.</p>
+
+  <h2>What it does today</h2>
+  <ul>
+    <li>Opens CSV files of any size. The first rows appear in about a tenth of a second; on a {TESTED_ON}, every row of a 20 GB file was read in about 20 seconds.</li>
+    <li>Finds text in every row; filters by conditions such as <em>is</em>, <em>is one of</em> (a pasted list), <em>contains</em>, <em>is a number between</em> and <em>is not a number</em>.</li>
+    <li>Exports to CSV or Excel, with only the columns you choose, every Nth row if you want a sample, and split into files that fit Excel or an import limit.</li>
+    <li>Shows values exactly as they are in the file, so leading zeros, long IDs and dates aren't changed.</li>
+  </ul>
+
+  <h2>Contact</h2>
+  <p>Questions, bug reports and ideas: <a href="mailto:hi@megacsv.com">hi@megacsv.com</a>, or the Feedback button in the <a href={APP_URL}>app</a>.</p>
+</Page>

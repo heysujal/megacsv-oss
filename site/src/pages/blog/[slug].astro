@@ -1,0 +1,71 @@
+---
+import { render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { APP_URL } from "../../data/home";
+import { livePosts, publishDate } from "../../lib/live";
+
+export async function getStaticPaths() {
+  const posts = await livePosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, heading, description, updated } = post.data;
+// A queued post shows the day it went live.
+const date = publishDate(post)!;
+const url = new URL(`/blog/${post.id}`, Astro.site).href;
+const site = Astro.site!.href;
+const ogImage = new URL(`/og/blog/${post.id}.png`, site).href;
+const fmt = (d: Date) => d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
+
+const org = { "@type": "Organization", name: "MegaCSV", url: site, logo: new URL("/icon-512.png", site).href };
+const jsonld = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: heading,
+    description,
+    datePublished: date.toISOString(),
+    dateModified: (updated ?? date).toISOString(),
+    author: org,
+    publisher: org,
+    mainEntityOfPage: url,
+    image: ogImage,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: site },
+      { "@type": "ListItem", position: 2, name: "Blog", item: new URL("/blog", site).href },
+      { "@type": "ListItem", position: 3, name: heading, item: url },
+    ],
+  },
+];
+---
+
+<Base
+  title={title}
+  description={description}
+  jsonld={jsonld}
+  ogImage={`/og/blog/${post.id}.png`}
+  ogImageAlt={`${heading}. MegaCSV blog.`}
+  article={{ published: date, modified: updated ?? date }}
+>
+  <article class="post col">
+    <img class="post-image" src={`/og/blog/${post.id}.png`} alt="" width="1200" height="630" fetchpriority="high" decoding="async" />
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/blog">Blog</a></nav>
+    <h1>{heading}</h1>
+    <p class="m dates">
+      <time datetime={date.toISOString()}>{fmt(date)}</time>
+      {updated && <Fragment> · Updated <time datetime={updated.toISOString()}>{fmt(updated)}</time></Fragment>}
+    </p>
+    <Content />
+    <aside class="try">
+      <h2>Open your file now</h2>
+      <p>Free, no signup, nothing to install. Your file is opened in your browser and never uploaded.</p>
+      <a class="btn primary" href={APP_URL} data-cta="blog-end">Open a CSV file</a>
+    </aside>
+  </article>
+</Base>

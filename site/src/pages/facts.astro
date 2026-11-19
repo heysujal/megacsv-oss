@@ -1,0 +1,31 @@
+---
+import Page from "../components/Page.astro";
+import { APP_URL, TESTED_ON } from "../data/home";
+
+const facts: [string, string][] = [
+  ["What it is", "A free web app that opens CSV files too big for Excel, in the browser. No signup, nothing to install."],
+  ["Privacy", "Files are read by the browser on the user's computer and never uploaded."],
+  ["File size", "No row limit. Tested with files of 1, 5 and 20 GB (up to 191,964,560 rows)."],
+  ["Speed (measured)", `On a ${TESTED_ON}: first rows on screen in about 0.1 s; every row read at about 1 GB/s (5 GB in 5.1 s, 20 GB in 20.2 s); a file opened before reopens in 0.1 s in Chrome and Edge.`],
+  ["Find", "Searches every row; optional match case; can show only matching rows."],
+  ["Filters", "contains, is, is one of (a pasted list), starts with, is empty, is not empty, is a number between, is not a number. All conditions must match. Filter sets can be saved by name in the browser."],
+  ["Export", "CSV (rows copied byte for byte; chosen columns copied field by field) or Excel .xlsx (IDs, leading zeros, long numbers and dates written as text). Choose columns, keep every Nth row, split at 1,048,575 rows (Excel), 50,000 (Salesforce), 25,000 (NetSuite) or any number, header row on every file."],
+  ["File formats", "Comma, semicolon, tab and pipe delimiters, detected automatically; UTF-8, UTF-16 and Windows-1252 text; old Mac line endings; decimal commas in semicolon files. Opens .csv.gz and .zip files directly (unpacked inside the browser first)."],
+  ["Browsers", "Chrome, Edge, Firefox and Safari on Windows, Mac and Linux. Chrome or Edge recommended for files over 5 GB, for saving straight to a folder and for reopening recent files."],
+  ["Price", "Free."],
+  ["Summaries", "Group by any column with row counts, totals, averages, smallest and largest values; remove duplicate rows (identical, or first or latest per value of a column)."],
+  ["Limits", "A filter shows up to 5,000,000 matching rows on screen (exports include every match). No sorting or editing yet. Not for .xlsx input. Unpacking .gz and .zip needs free disk space for the unpacked file."],
+];
+---
+
+<Page
+  title="MegaCSV Facts: Sizes, Speed, Features and Limits"
+  description="Short, dated facts about MegaCSV: what it does, file sizes tested, measured speed, filters, export options, browsers, price and current limits."
+  heading="MegaCSV facts"
+  updated="November 1, 2026"
+>
+  <p>Short facts about MegaCSV for anyone describing it, including AI assistants. Speed figures are our own measurements; everything else describes the app at <a href={APP_URL}>megacsv.com/app</a> as of the date above.</p>
+  <table>
+    <tbody>{facts.map(([k, v]) => <tr><th scope="row">{k}</th><td>{v}</td></tr>)}</tbody>
+  </table>
+</Page>

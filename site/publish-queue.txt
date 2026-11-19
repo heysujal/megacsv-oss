@@ -1,0 +1,16 @@
+# Publish queue: the pages below go live in this order, `per day` of them each day
+# from `start` (India time). See them all with: node site/queue.mjs
+#
+# The nightly rebuild that puts each day's pages up is OFF while this list is empty.
+# Before adding pages, turn it on: swap the two "triggers" lines in worker/wrangler.jsonc.
+#
+# One page per line: problem pages by name (csv-opens-in-one-column), comparison
+# pages as vs/<name> (vs/excel), blog posts as blog/<name>. A listed page goes live
+# on its day even if it says `draft: true`, so new pages can stay drafts until then.
+#
+# To change the order, move lines. Keep lines that are already live: deleting one
+# moves every page below it a day earlier. Add new pages at the end.
+
+start: 2026-11-03
+per day: 2
+

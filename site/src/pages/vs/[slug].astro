@@ -1,0 +1,12 @@
+---
+import Guide from "../../components/Guide.astro";
+import { guides } from "../../lib/live";
+
+// Comparison pages ("MegaCSV vs …"), built from their publish date on (the dev server builds all).
+export async function getStaticPaths() {
+  return (await guides("compare")).map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+---
+
+<Guide entry={entry} path={`/vs/${entry.id}`} section="Comparisons" />

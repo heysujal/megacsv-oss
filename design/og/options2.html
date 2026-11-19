@@ -1,0 +1,137 @@
+<!doctype html>
+<!-- Round 2 of blog image styles (share card, list thumbnail, post header), 1200x630.
+     All start from the live card (design/og/post.html). ?style=g..j&title=…
+     Rendered by design/og/options/render2.mjs. -->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face { font-family: "Hanken"; src: url("../../site/node_modules/@fontsource-variable/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2") format("woff2"); font-weight: 100 900; }
+  :root { --ground: #f3f4f2; --sheet: #fff; --ink: #17181a; --mute: #63666b; --tone1: #e8e9e6; --line: #e2e3e0; --cobalt: #2449f5; --match: #dbe2ff; }
+  * { box-sizing: border-box; margin: 0; }
+  body { width: 1200px; height: 630px; overflow: hidden; font-family: "Hanken", system-ui, sans-serif; -webkit-font-smoothing: antialiased; color: var(--ink); }
+  section { display: none; position: absolute; inset: 0; }
+  body[data-style="g"] .g, body[data-style="h"] .h, body[data-style="i"] .i, body[data-style="j"] .j { display: block; }
+  h1 { font-weight: 500; letter-spacing: -0.035em; line-height: 1.05; text-wrap: balance; }
+  .brand { display: flex; align-items: center; gap: 14px; font-size: 30px; font-weight: 600; letter-spacing: -0.01em; }
+  .brand img { width: 52px; height: 52px; }
+  .url { font-size: 27px; font-weight: 600; letter-spacing: -0.01em; }
+  .tag { border-radius: 8px; padding: 9px 16px; font-size: 21px; font-weight: 500; }
+
+  /* A complete little sheet: header row, row numbers, one highlighted row. */
+  .sheet { background: var(--sheet); border-radius: 12px; overflow: hidden; font-size: 14px; font-variant-numeric: tabular-nums; color: var(--ink); }
+  .sheet .r { display: grid; grid-template-columns: 104px repeat(3, 1fr); height: 34px; align-items: center; border-bottom: 1px solid #ecedea; }
+  .sheet .r:last-child { border-bottom: 0; }
+  .sheet .r > * { padding: 0 12px; }
+  .sheet .n { background: var(--ground); color: var(--mute); text-align: right; height: 100%; display: flex; align-items: center; justify-content: flex-end; }
+  .sheet .hd { background: var(--ground); color: var(--mute); font-weight: 500; }
+  .sheet i { display: block; height: 9px; border-radius: 5px; background: var(--tone1); }
+  .sheet .on { background: var(--match); }
+  .sheet .on .n { background: #e6eafd; color: var(--cobalt); font-weight: 600; }
+  .sheet .on i { background: var(--cobalt); opacity: .55; }
+
+  /* G · the live card, in cobalt. */
+  .g { background: var(--cobalt); color: #fff; padding: 64px 72px; display: none; flex-direction: column; }
+  body[data-style="g"] .g { display: flex; }
+  .g .top { display: flex; align-items: center; justify-content: space-between; }
+  .g .brand img { filter: brightness(0) invert(1); }
+  .g .tag { background: #fff; color: var(--cobalt); }
+  .g .title { flex: 1; display: flex; align-items: center; }
+  .g h1 { font-size: 72px; max-width: 1000px; }
+  .g .foot { display: flex; align-items: flex-end; justify-content: space-between; }
+  .g .url { color: #fff; }
+  .g .cells { display: grid; grid-template-columns: repeat(6, 54px); gap: 4px; }
+  .g .cells i { height: 18px; border-radius: 3px; background: #ffffff33; }
+  .g .cells i.on { background: #fff; }
+
+  /* H · the live light card, with a small complete sheet. */
+  .h { background: var(--ground); padding: 64px 72px; }
+  .h .top { display: flex; align-items: center; justify-content: space-between; }
+  .h .tag { background: var(--cobalt); color: #fff; }
+  .h h1 { font-size: 66px; max-width: 640px; margin-top: 64px; }
+  .h .url { position: absolute; left: 72px; bottom: 60px; color: var(--cobalt); }
+  .h .sheet { position: absolute; right: 72px; bottom: 60px; width: 400px; box-shadow: 0 0 0 1px var(--line), 0 24px 48px -32px #0004; }
+
+  /* I · cobalt, title left, a complete sheet card right. */
+  .i { background: var(--cobalt); color: #fff; padding: 64px 72px; }
+  .i .brand img { filter: brightness(0) invert(1); }
+  .i h1 { font-size: 64px; max-width: 600px; margin-top: 62px; }
+  .i .url { position: absolute; left: 72px; bottom: 60px; color: #fff; }
+  .i .url::before { content: ""; display: inline-block; width: 28px; height: 3px; background: #fff; vertical-align: middle; margin-right: 14px; border-radius: 2px; }
+  .i .sheet { position: absolute; right: 72px; top: 64px; bottom: 64px; width: 420px; box-shadow: 0 30px 60px -30px #0b1a6baa; display: flex; flex-direction: column; }
+  .i .sheet .r { flex: 1; height: auto; }
+
+  /* J · split: cobalt panel with the title, light panel with the sheet. */
+  .j { display: none; grid-template-columns: 700px 1fr; }
+  body[data-style="j"] .j { display: grid; }
+  .j .left { background: var(--cobalt); color: #fff; padding: 64px 64px 60px 72px; position: relative; }
+  .j .brand img { filter: brightness(0) invert(1); }
+  .j h1 { font-size: 62px; margin-top: 60px; }
+  .j .url { position: absolute; left: 72px; bottom: 60px; color: #fff; }
+  .j .right { background: var(--ground); display: flex; align-items: center; justify-content: center; padding: 48px; }
+  .j .sheet { width: 100%; box-shadow: 0 0 0 1px var(--line), 0 24px 48px -32px #0004; }
+  .j .sheet .r { grid-template-columns: 96px repeat(2, 1fr); height: 40px; }
+</style>
+</head>
+<body data-style="g">
+  <section class="g">
+    <div class="top"><div class="brand"><img src="../logo/kit/svg/whale.svg" alt="" />MegaCSV</div><span class="tag">Blog</span></div>
+    <div class="title"><h1 class="t">Title</h1></div>
+    <div class="foot">
+      <span class="url">megacsv.com</span>
+      <div class="cells" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+  </section>
+
+  <section class="h">
+    <div class="top"><div class="brand"><img src="../logo/kit/svg/whale.svg" alt="" />MegaCSV</div><span class="tag">Blog</span></div>
+    <h1 class="t">Title</h1>
+    <span class="url">megacsv.com</span>
+    <div class="sheet" data-rows="6" data-cols="3"></div>
+  </section>
+
+  <section class="i">
+    <div class="brand"><img src="../logo/kit/svg/whale.svg" alt="" />MegaCSV</div>
+    <h1 class="t">Title</h1>
+    <span class="url">megacsv.com</span>
+    <div class="sheet" data-rows="11" data-cols="3"></div>
+  </section>
+
+  <section class="j">
+    <div class="left">
+      <div class="brand"><img src="../logo/kit/svg/whale.svg" alt="" />MegaCSV</div>
+      <h1 class="t">Title</h1>
+      <span class="url">megacsv.com</span>
+    </div>
+    <div class="right"><div class="sheet" data-rows="9" data-cols="2"></div></div>
+  </section>
+<script>
+  // Fill each sheet: a header row, then row numbers around 18 million with one highlighted.
+  const widths = [72, 55, 84, 66, 46, 76, 60, 68, 42, 74, 58, 80];
+  for (const el of document.querySelectorAll(".sheet")) {
+    const rows = +el.dataset.rows, cols = +el.dataset.cols;
+    const letters = "ABCD".slice(0, cols).split("");
+    let html = `<div class="r hd"><span class="n"></span>${letters.map((l) => `<span>${l}</span>`).join("")}</div>`;
+    const on = Math.floor(rows / 2) - 1;
+    for (let k = 0; k < rows - 1; k++) {
+      const n = (18402113 + k).toLocaleString("en-US");
+      const cells = letters.map((_, c) => `<span><i style="width:${widths[(k * 3 + c) % widths.length]}%"></i></span>`).join("");
+      html += `<div class="r${k === on ? " on" : ""}"><span class="n">${n}</span>${cells}</div>`;
+    }
+    el.innerHTML = html;
+    if (el.closest(".j")) el.style.gridTemplateColumns = "";
+  }
+  const q = new URLSearchParams(location.search);
+  const style = q.get("style") || "g";
+  document.body.dataset.style = style;
+  for (const el of document.querySelectorAll(".t")) el.textContent = q.get("title") || "Title";
+  document.fonts.ready.then(() => {
+    const h1 = document.querySelector(`.${style} h1`);
+    const max = { g: 330, h: 300, i: 330, j: 330 }[style];
+    let size = parseFloat(getComputedStyle(h1).fontSize);
+    while (h1.scrollHeight > max && size > 40) h1.style.fontSize = `${(size -= 3)}px`;
+    document.body.dataset.ready = "1";
+  });
+</script>
+</body>
+</html>

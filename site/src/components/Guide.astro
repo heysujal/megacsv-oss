@@ -1,0 +1,115 @@
+---
+// A problem page or a comparison page: the error (or verdict) first, the fix with
+// MegaCSV, other honest fixes, a short FAQ and related pages (docs/reference.md,
+// "Page template for every problem page" and "Comparison pages").
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import Base from "../layouts/Base.astro";
+import { APP_URL } from "../data/home";
+import { isLive, publishDate } from "../lib/live";
+
+interface Props {
+  entry: CollectionEntry<"problems"> | CollectionEntry<"compare">;
+  path: string;
+  section: string;
+  /** The section's own page, when it has one (/fixes). */
+  sectionHref?: string;
+}
+const { entry, path, section, sectionHref } = Astro.props;
+const { Content } = await render(entry);
+const { title, heading, description, error, where, checked, faq, related } = entry.data;
+const date = publishDate(entry);
+const live = isLive(entry);
+const site = Astro.site!.href;
+const url = new URL(path, site).href;
+const fmt = (d: Date) => d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
+
+// Related links: titles from any collection ("slug", "vs/slug", "blog/slug"). A page links only to live pages, so a
+// scheduled page's link appears the day it goes live (the dev server shows them all).
+const all = [
+  ...(await getCollection("problems")).map((e) => ({ slug: e.id, href: `/${e.id}`, heading: e.data.heading, live: isLive(e) })),
+  ...(await getCollection("compare")).map((e) => ({ slug: `vs/${e.id}`, href: `/vs/${e.id}`, heading: e.data.heading, live: isLive(e) })),
+  ...(await getCollection("blog")).map((e) => ({ slug: `blog/${e.id}`, href: `/blog/${e.id}`, heading: e.data.heading, live: isLive(e) })),
+];
+const links = related
+  .map((slug) => {
+    const link = all.find((a) => a.slug === slug);
+    if (!link) throw new Error(`${entry.id}: related page "${slug}" doesn't exist`);
+    return link;
+  })
+  .filter((a) => a.live || import.meta.env.DEV);
+
+const jsonld: object[] = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: site },
+      ...(sectionHref ? [{ "@type": "ListItem", position: 2, name: section, item: new URL(sectionHref, site).href }] : []),
+      { "@type": "ListItem", position: sectionHref ? 3 : 2, name: heading, item: url },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: heading,
+    description,
+    url,
+    ...(date && { datePublished: date.toISOString().slice(0, 10) }),
+    dateModified: (date && date > checked ? date : checked).toISOString().slice(0, 10),
+  },
+];
+if (faq.length)
+  jsonld.push({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+  });
+---
+
+<Base title={title} description={description} jsonld={jsonld}>
+  <article class="post col">
+    {!live && (
+      <p class="draft-note">
+        {entry.data.draft || !date ? "Draft: not published." : `Goes live on ${fmt(date)}.`} Only visible on the local dev server.
+      </p>
+    )}
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / {sectionHref ? <a href={sectionHref}>{section}</a> : section}</nav>
+    <h1>{heading}</h1>
+    {error && (
+      <blockquote class="error">
+        <small>{where}</small>
+        {error}
+      </blockquote>
+    )}
+    <Content />
+    <aside class="try">
+      <h2>Open your file now</h2>
+      <p>Free, no signup, nothing to install. Your file is opened in your browser and never uploaded.</p>
+      <a class="btn primary" href={APP_URL} data-cta={`guide-${entry.id}`}>Open a CSV file</a>
+    </aside>
+    {faq.length > 0 && (
+      <section>
+        <h2>Questions</h2>
+        <div class="faq">
+          {faq.map((f) => (
+            <details>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+    )}
+    {links.length > 0 && (
+      <section>
+        <h2>Related</h2>
+        <ul>
+          {links.map((l) => (
+            <li><a href={l.href}>{l.heading}</a></li>
+          ))}
+        </ul>
+      </section>
+    )}
+    <p class="m dates">Facts checked {fmt(checked)}.</p>
+  </article>
+</Base>

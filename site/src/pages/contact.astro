@@ -1,0 +1,19 @@
+---
+import Page from "../components/Page.astro";
+import { APP_URL } from "../data/home";
+---
+
+<Page
+  title="Contact MegaCSV"
+  description="Get in touch with MegaCSV: email hi@megacsv.com, or use the Feedback button in the app to report a problem or suggest a feature."
+  heading="Contact us"
+>
+  <p>The quickest way to reach us is email: <a href="mailto:hi@megacsv.com">hi@megacsv.com</a>. We read everything and usually reply within two working days.</p>
+
+  <h2>Report a problem or suggest a feature</h2>
+  <p>Open the <a href={APP_URL}>app</a> and choose <strong>Feedback</strong> at the top right. Tell us what you were doing and what happened; add your email if you'd like an answer. Feedback never includes your file.</p>
+  <p>If a file doesn't open correctly, it helps to know its size, roughly how many rows and columns it has, and which program created it. Please don't send the file itself unless we ask.</p>
+
+  <h2>Privacy questions</h2>
+  <p>See the <a href="/privacy">privacy policy</a>, or email <a href="mailto:hi@megacsv.com">hi@megacsv.com</a>.</p>
+</Page>

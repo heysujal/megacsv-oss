@@ -1,0 +1,44 @@
+{
+  "brand": "MegaCSV",
+  "tagline": "Open CSV files too big for Excel",
+  "brief": "A free browser tool for Excel users holding CSV files too big for Excel, often confidential and on locked-down work laptops. It should feel calm, capable and trustworthy, and be memorable enough that people tell colleagues.",
+  "adjectives": [
+    "calm",
+    "big",
+    "friendly",
+    "trustworthy"
+  ],
+  "criteria": "Distinct from grids, tables and arrows used by data tools; a character the brand can use everywhere; readable as a 16 px favicon.",
+  "industry": "saas",
+  "nav": [
+    "How it works",
+    "Questions",
+    "Guides"
+  ],
+  "brand_color": "#2449f5",
+  "greyscale": false,
+  "designer": "MegaCSV",
+  "round": 4,
+  "concepts": [
+    {
+      "name": "The blue whale",
+      "symbol": "svg/whale.svg",
+      "lockup": "svg/lockup-horizontal.svg",
+      "symbol_on_tile": "svg/whale-reversed.svg",
+      "tile_color": "#2449f5",
+      "idea": "The largest animal on earth, in cobalt; its throat grooves are rows of data.",
+      "rationale": [
+        "Big and calm: the thing that swallows files Excel can't",
+        "A character for loading screens, empty states, stickers and the 404 page",
+        "Simplified silhouette carries the favicon at 16 px"
+      ],
+      "lockup_on_dark": "svg/lockup-horizontal-on-dark.svg"
+    }
+  ],
+  "recommendation": "The blue whale, with the simplified silhouette for favicons and the white-on-cobalt tile as the app icon.",
+  "next_steps": [
+    "Trademark and reverse-image search",
+    "Animated version for loading and launch video",
+    "Apply to the site and app redesign"
+  ]
+}

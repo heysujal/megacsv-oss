@@ -1,0 +1,61 @@
+---
+// A static picture of the app with realistic data, drawn as a table so it stays crisp and readable.
+interface Props {
+  caption: string;
+  /** Makes the picture a link (the sample file), since visitors click it expecting it to work. */
+  href?: string;
+}
+
+const { caption, href } = Astro.props;
+const Wrap = href ? "a" : "div";
+const COLS = ["txn_id", "posted_date", "vendor", "account", "amount", "currency", "status", "country"];
+const ROWS = [
+  ["TX-090412004", "2026-08-14", "Northwind Traders", "6200 Freight", "4,218.40", "EUR", "Posted", "DE"],
+  ["TX-090412051", "2026-07-02", "Globex Logistics", "6200 Freight", "18,904.12", "USD", "Posted", "US"],
+  ["TX-090412079", "2026-09-21", "Initech Software", "6400 Software", "1,250.00", "USD", "Pending", "US"],
+  ["TX-090412106", "2026-08-30", "Acme Industrial Supply", "6100 Materials", "32,617.75", "INR", "Posted", "IN"],
+  ["TX-090412148", "2026-07-17", "Umbrella Freight", "6200 Freight", "7,045.90", "GBP", "Reversed", "GB"],
+  ["TX-090412170", "2026-09-05", "Soylent Foods", "7100 Travel", "312.60", "SGD", "Posted", "SG"],
+  ["TX-090412213", "2026-08-08", "Vandelay Imports", "6100 Materials", "26,480.00", "USD", "Posted", "US"],
+  ["TX-090412239", "2026-07-26", "Acme Industrial Supply", "6100 Materials", "11,093.35", "EUR", "Pending", "DE"],
+  ["TX-090412262", "2026-09-12", "Northwind Traders", "6400 Software", "940.18", "GBP", "Posted", "GB"],
+  ["TX-090412297", "2026-08-19", "Globex Logistics", "6200 Freight", "15,377.64", "INR", "Posted", "IN"],
+];
+const FIRST = 18_402_113;
+const SELECTED = 3;
+---
+
+<figure class="preview">
+  <Wrap
+    class:list={["window", { live: href }]}
+    href={href}
+    data-cta={href ? "preview" : undefined}
+    role={href ? undefined : "img"}
+    aria-label={href ? "Try MegaCSV on a 2 GB sample file" : "MegaCSV showing row 18,402,116 of a 48-million-row file, with a formula bar, column letters and sheet tabs."}
+  >
+    <div class="fbar" aria-hidden="true">
+      <span class="name">C{(FIRST + SELECTED).toLocaleString("en-US")}</span><span class="fx">fx</span><span class="val">{ROWS[SELECTED][2]}</span>
+    </div>
+    <div class="sheet" aria-hidden="true">
+      <div class="scroller">
+        <table class="grid">
+          <thead>
+            <tr class="letters"><th class="rn"></th>{COLS.map((_, i) => <th>{String.fromCharCode(65 + i)}</th>)}</tr>
+            <tr class="names"><th class="rn"></th>{COLS.map((c) => <th>{c}</th>)}</tr>
+          </thead>
+          <tbody>
+            {ROWS.map((row, i) => (
+              <tr class={i === SELECTED ? "sel" : undefined}>
+                <td class="rn">{(FIRST + i).toLocaleString("en-US")}</td>
+                {row.map((v, j) => <td class={j === 4 ? "num" : v === "Reversed" ? "warn" : undefined}>{v}</td>)}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="tabs" aria-hidden="true"><span class="on">All rows · 48,273,485</span><span>Acme 10,000 to 50,000 · 12,408 rows</span></div>
+    {href && <span class="try" aria-hidden="true">Try it on a 2 GB sample file</span>}
+  </Wrap>
+  <figcaption>{caption}</figcaption>
+</figure>

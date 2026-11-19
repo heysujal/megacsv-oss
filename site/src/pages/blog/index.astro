@@ -1,0 +1,29 @@
+---
+import Base from "../../layouts/Base.astro";
+import { livePosts } from "../../lib/live";
+
+const posts = await livePosts();
+---
+
+<Base title="Blog: big CSV files, Excel limits and fixes | MegaCSV" description="Plain answers for people whose CSV files are too big for Excel, or whose data Excel keeps changing.">
+  <div class="post col wide">
+    <h1>Blog</h1>
+    <p class="lede-left">Plain answers for people whose CSV files are too big for Excel, or whose data Excel keeps changing.</p>
+    <p class="blog-fixes m">Got an error message? <a href="/fixes">See every fix, one page per message →</a></p>
+    <ul class="postlist">
+      {
+        posts.map((p, i) => (
+          <li>
+            <a class="thumb" href={`/blog/${p.id}`} tabindex="-1" aria-hidden="true">
+              <img src={`/og/blog/${p.id}.png`} alt="" width="1200" height="630" loading={i < 3 ? "eager" : "lazy"} decoding="async" />
+            </a>
+            <div>
+              <a href={`/blog/${p.id}`}>{p.data.heading}</a>
+              <p class="m">{p.data.description}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Base>

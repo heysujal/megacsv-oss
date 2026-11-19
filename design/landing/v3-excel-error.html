@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Excel data set too large for the grid? Open it here · MegaCSV</title>
+<meta name="description" content="Excel says the data set is too large for the grid? Open every row here, filter it, and export a part that fits in Excel." />
+<link rel="canonical" href="https://megacsv.com/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Excel data set too large for the grid? Open it here · MegaCSV" />
+<meta property="og:description" content="Excel says the data set is too large for the grid? Open every row here, filter it, and export a part that fits in Excel." />
+<meta property="og:url" content="https://megacsv.com/" />
+<meta property="og:image" content="https://megacsv.com/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#f3f4f2" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#111214" media="(prefers-color-scheme: dark)" />
+<link rel="icon" href="../logo/kit/svg/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="landing.css" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "MegaCSV",
+  "url": "https://megacsv.com/",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Windows, macOS, Linux, ChromeOS",
+  "description": "Open CSV files too big for Excel, find and filter rows in plain words, and export them back to Excel.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I open a CSV file that's too big for Excel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Open it in MegaCSV. Choose the file or drop it on the page and every row appears in seconds, with no row limit. Find or filter the rows you need, then export them back to Excel."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the maximum number of rows in Excel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "1,048,576 rows per sheet (about 10.5 lakh), and 16,384 columns. Anything past that is cut off when Excel opens a CSV. MegaCSV has no row limit and splits exports so each part fits in one Excel sheet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does Excel say \"This data set is too large for the Excel grid\"?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The file has more rows than one sheet can hold, so Excel loads only the first 1,048,576 and drops the rest. Open the whole file in MegaCSV, filter it down, and export a part that fits."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I open a large CSV file on a Mac?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. MegaCSV runs in Safari, Chrome, Edge or Firefox on a Mac. You don't need Power Pivot or the Data Model, which Excel for Mac doesn't have."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will it change my data?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Values show exactly as they are in the file: leading zeros, long account numbers and dates stay as written. Excel exports keep IDs and long numbers as text."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I split a large CSV into smaller files?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Open the file, choose Export, and pick a size: 1,048,575 rows to fit Excel, 50,000 for Salesforce imports, 25,000 for NetSuite, or your own number. Every part gets the header row."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to install anything or sign up?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It works in your browser, so there's nothing to install and no account to create. That also means no IT ticket on a work laptop."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How big a file can it open?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Files of tens of gigabytes and hundreds of millions of rows. The practical limit depends on your computer; MegaCSV tells you if a file is larger than it can handle comfortably."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is MegaCSV free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Opening, finding, filtering and exporting are free, with no row limit and no trial period."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="v-v3-excel-error">
+<a class="skip" href="#main">Skip to content</a>
+<p class="variant">Variant 3 · The Excel error · <a href="index.html">all variants</a></p>
+<header class="nav">
+  <a class="brand" href="#"><img src="../logo/kit/svg/whale.svg" alt="" width="28" height="28" />MegaCSV</a>
+  <nav class="links" aria-label="Main"><a href="#how">How it works</a><a href="#faq">Questions</a><a href="#">Guides</a></nav>
+  <span class="sp"></span>
+  <button class="iconbtn" type="button" data-theme aria-label="Switch between light and dark">
+    <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg>
+  </button>
+  <details class="menu"><summary aria-label="Menu"><svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></summary>
+    <nav aria-label="Main"><a href="#how">How it works</a><a href="#faq">Questions</a><a href="#">Guides</a></nav></details>
+</header>
+<main id="main">
+<div class="col">
+  <blockquote class="error hero"><small>Microsoft Excel</small>This data set is too large for the Excel grid. If you save this workbook, you'll lose data that wasn't loaded.</blockquote>
+  <h1>Open it here instead.</h1>
+  <p class="lede">Every row, in seconds. Find what you need and take it back to Excel. <span>Free, with no signup.</span></p>
+  <div class="ctas"><button class="btn primary" type="button">Choose a CSV file</button><button class="btn" type="button">Try a sample file</button></div>
+  <section id="how">
+    <h2>Three steps, no formulas</h2>
+    <ol class="steps numbered">
+      <li><b>Choose your file.</b> Rows appear while the rest is still being read.</li>
+      <li><b>Say what you're looking for.</b> <span class="sentence inline">Show rows where <u>vendor</u> contains <u>Acme</u>.</span></li>
+      <li><b>Export to Excel.</b> 12,408 rows fit in one sheet; bigger results are split for you.</li>
+    </ol>
+  </section>
+</div>
+<div class="col wide"><figure class="preview">
+  <div class="window">
+    <div class="fbar"><span class="name">C18,402,116</span><span class="fx">fx</span><span class="val">Acme Industrial Supply</span></div>
+    <div class="sheet"><div class="scroller"><table class="grid"><thead><tr class="letters"><th class="rn"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th></tr><tr class="names"><th class="rn"></th><th>txn_id</th><th>posted_date</th><th>vendor</th><th>account</th><th>amount</th><th>currency</th><th>status</th><th>country</th></tr></thead><tbody><tr><td class="rn">18,402,113</td><td>TX-090412030</td><td>2026-09-03</td><td>Vandelay Imports</td><td>6400 Software</td><td class="num">16,333.79</td><td>INR</td><td>Reversed</td><td>SG</td></tr><tr><td class="rn">18,402,114</td><td>TX-090412062</td><td>2026-08-03</td><td>Vandelay Imports</td><td>6100 Materials</td><td class="num">45,345.36</td><td>GBP</td><td>Posted</td><td>US</td></tr><tr><td class="rn">18,402,115</td><td>TX-090412097</td><td>2026-09-10</td><td>Soylent Foods</td><td>7100 Travel</td><td class="num">13,669.17</td><td>GBP</td><td>Pending</td><td>US</td></tr><tr class="sel"><td class="rn">18,402,116</td><td>TX-090412141</td><td>2026-08-12</td><td>Northwind Traders</td><td>6100 Materials</td><td class="num">23,703.34</td><td>EUR</td><td>Pending</td><td>DE</td></tr><tr><td class="rn">18,402,117</td><td>TX-090412171</td><td>2026-07-13</td><td>Initech Software</td><td>7100 Travel</td><td class="num">3,878.94</td><td>GBP</td><td>Reversed</td><td>SG</td></tr><tr><td class="rn">18,402,118</td><td>TX-090412193</td><td>2026-07-27</td><td>Initech Software</td><td>6400 Software</td><td class="num">33,910.57</td><td>INR</td><td>Reversed</td><td>DE</td></tr><tr><td class="rn">18,402,119</td><td>TX-090412226</td><td>2026-07-06</td><td>Northwind Traders</td><td>6200 Freight</td><td class="num">31,612.90</td><td>USD</td><td>Reversed</td><td>SG</td></tr><tr><td class="rn">18,402,120</td><td>TX-090412264</td><td>2026-08-10</td><td>Acme Industrial Supply</td><td>6200 Freight</td><td class="num">20,116.40</td><td>INR</td><td>Pending</td><td>DE</td></tr><tr><td class="rn">18,402,121</td><td>TX-090412318</td><td>2026-09-20</td><td>Soylent Foods</td><td>6100 Materials</td><td class="num">21,925.42</td><td>GBP</td><td>Reversed</td><td>GB</td></tr></tbody></table></div></div>
+    <div class="tabs"><span class="on">Acme Q3 · 12,408 rows</span><span>All rows · 48,273,485</span></div>
+  </div>
+  <figcaption>transactions_q3.csv · 6.2 GB · 48,273,485 rows*</figcaption>
+</figure></div>
+<div class="col">
+  <section>
+    <h2>Other messages it gets you past</h2>
+    <ul class="problems"><li><a href="#"><small>Excel</small>This data set is too large for the Excel grid.</a></li><li><a href="#"><small>Excel</small>File not loaded completely.</a></li><li><a href="#"><small>Excel for Mac</small>No Power Pivot or Data Model, so no way past 1,048,576 rows.</a></li><li><a href="#"><small>Google Sheets</small>This action would increase the number of cells above the limit of 10,000,000 cells.</a></li><li><a href="#"><small>LibreOffice Calc</small>The maximum number of rows per sheet was exceeded.</a></li><li><a href="#"><small>Notepad++</small>File is too big to be opened by Notepad++.</a></li><li><a href="#"><small>pandas</small>MemoryError: Unable to allocate 51.0 GiB for an array.</a></li></ul>
+  </section>
+</div>
+<section id="faq"><h2>Questions</h2><div class="faq"><details><summary>How do I open a CSV file that&#x27;s too big for Excel?</summary><p>Open it in MegaCSV. Choose the file or drop it on the page and every row appears in seconds, with no row limit. Find or filter the rows you need, then export them back to Excel.</p></details><details><summary>What is the maximum number of rows in Excel?</summary><p>1,048,576 rows per sheet (about 10.5 lakh), and 16,384 columns. Anything past that is cut off when Excel opens a CSV. MegaCSV has no row limit and splits exports so each part fits in one Excel sheet.</p></details><details><summary>Why does Excel say &quot;This data set is too large for the Excel grid&quot;?</summary><p>The file has more rows than one sheet can hold, so Excel loads only the first 1,048,576 and drops the rest. Open the whole file in MegaCSV, filter it down, and export a part that fits.</p></details><details><summary>Can I open a large CSV file on a Mac?</summary><p>Yes. MegaCSV runs in Safari, Chrome, Edge or Firefox on a Mac. You don&#x27;t need Power Pivot or the Data Model, which Excel for Mac doesn&#x27;t have.</p></details><details><summary>Will it change my data?</summary><p>No. Values show exactly as they are in the file: leading zeros, long account numbers and dates stay as written. Excel exports keep IDs and long numbers as text.</p></details><details><summary>How do I split a large CSV into smaller files?</summary><p>Open the file, choose Export, and pick a size: 1,048,575 rows to fit Excel, 50,000 for Salesforce imports, 25,000 for NetSuite, or your own number. Every part gets the header row.</p></details><details><summary>Do I need to install anything or sign up?</summary><p>No. It works in your browser, so there&#x27;s nothing to install and no account to create. That also means no IT ticket on a work laptop.</p></details><details><summary>How big a file can it open?</summary><p>Files of tens of gigabytes and hundreds of millions of rows. The practical limit depends on your computer; MegaCSV tells you if a file is larger than it can handle comfortably.</p></details><details><summary>Is MegaCSV free?</summary><p>Yes. Opening, finding, filtering and exporting are free, with no row limit and no trial period.</p></details></div></section>
+</main>
+<footer class="foot">
+  <div><a class="brand" href="#"><img src="../logo/kit/svg/whale.svg" alt="" width="22" height="22" />MegaCSV</a><p>Open CSV files too big for Excel.</p></div>
+  <nav aria-label="Footer"><a href="#">About us</a><a href="#">Contact us</a><a href="#">Privacy policy</a><a href="#">Terms and conditions</a></nav>
+  <p class="note">* Placeholder figure, to be measured before launch.</p>
+</footer>
+<script>
+document.querySelector("[data-theme]").addEventListener("click", () => document.documentElement.classList.toggle("dark"));
+</script>
+</body>
+</html>

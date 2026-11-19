@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MegaCSV · 07 Cobalt counter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wdth,wght@75..125,400..900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="base.css" />
+<style>
+:root { --font: "Mona Sans", system-ui, sans-serif; --field: #2b3bff; --onfield: #ffffff; --onfield2: #c9cdff;
+  --bg: #f4f5fb; --ink: #0d1033; --mute: #575c7a; --step: #e9ebf6; --step2: #dde0f0; --line: #e1e4f1;
+  --accent: #2b3bff; --on-accent: #fff; --hit: #d9dcff; --btn-r: 999px; }
+.dark { --field: #0b1040; --onfield: #eef0ff; --onfield2: #8f97e8; --bg: #090b1f; --ink: #e9ebff; --mute: #9599c2; --step: #12163a; --step2: #1b2050; --line: #191d44; --accent: #6b78ff; --on-accent: #fff; --hit: #252c7a; }
+.field { background: var(--field); color: var(--onfield); }
+.wrap { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
+nav.top { display: flex; align-items: center; gap: 28px; height: 76px; }
+.mark { font-weight: 800; font-stretch: 125%; font-size: 22px; letter-spacing: -0.02em; }
+nav.top a { text-decoration: none; color: var(--onfield2); font-weight: 500; }
+nav.top .sp { flex: 1; }
+.field .iconbtn { background: color-mix(in oklab, var(--onfield) 14%, transparent); color: var(--onfield); }
+.field .btn.light { background: var(--onfield); color: var(--field); }
+.dark .field .btn.light { color: #0b1040; }
+.hero { padding: 56px 0 72px; }
+h1 { font-size: clamp(40px, 4.6vw, 68px); line-height: 1; letter-spacing: -0.035em; font-weight: 750; font-stretch: 112%; max-width: 20ch; }
+.odo { display: flex; align-items: flex-end; font-size: clamp(80px, 15.5vw, 260px); font-weight: 850; font-stretch: 118%; letter-spacing: -0.04em; line-height: 0.82; margin-top: 44px; font-variant-numeric: tabular-nums; }
+.odo .d { display: inline-block; height: 0.86em; overflow: hidden; }
+.odo .d > span { display: flex; flex-direction: column; transition: transform 900ms cubic-bezier(0.23, 1, 0.32, 1); }
+.odo .d > span > span { height: 0.86em; display: block; }
+.odo .c { width: 0.26em; }
+.odo + .cap { display: flex; justify-content: space-between; gap: 24px; margin-top: 18px; font-size: 20px; color: var(--onfield2); flex-wrap: wrap; }
+.odo + .cap b { color: var(--onfield); font-weight: 600; }
+.ruler { position: relative; margin-top: 40px; max-width: 760px; }
+.ruler .ticks { display: flex; justify-content: space-between; align-items: flex-end; height: 34px; }
+.ruler .ticks i { width: 2px; border-radius: 2px; height: 14px; background: color-mix(in oklab, var(--onfield) 35%, transparent); transition: height 200ms, background-color 200ms; }
+.ruler .ticks i.past { height: 20px; background: var(--onfield); }
+.ruler .ticks i.at { height: 32px; width: 4px; background: #ffd23f; }
+.ruler input { position: absolute; inset: 0; opacity: 0; cursor: grab; width: 100%; }
+.ruler .lbl { display: flex; justify-content: space-between; font-size: 14px; color: var(--onfield2); margin-top: 8px; }
+.row2 { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end; margin-top: 52px; }
+.row2 p { font-size: 20px; line-height: 1.5; max-width: 44ch; }
+.row2 .ctas { display: flex; gap: 10px; }
+.btn { padding: 15px 24px; font-size: 16px; }
+.field .btn.ghost { background: color-mix(in oklab, var(--onfield) 14%, transparent); color: var(--onfield); }
+
+section.band { padding: 150px 0 0; }
+h2 { font-size: clamp(36px, 4vw, 60px); line-height: 1; letter-spacing: -0.035em; font-weight: 750; font-stretch: 110%; max-width: 18ch; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 44px; align-items: start; }
+.quote { background: var(--step); border-radius: 24px; padding: 30px; font-size: 22px; line-height: 1.45; }
+.quote small { display: block; font-size: 14px; color: var(--mute); margin-bottom: 10px; }
+.split > p { font-size: 22px; line-height: 1.5; }
+.flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 44px; }
+.flow > div { background: var(--step); border-radius: 24px; padding: 26px; min-height: 240px; display: flex; flex-direction: column; }
+.flow > div:last-child { background: var(--accent); color: var(--on-accent); }
+.flow h3 { font-size: 24px; font-stretch: 108%; letter-spacing: -0.02em; }
+.flow p { margin-top: 8px; line-height: 1.5; opacity: 0.8; }
+.flow .big { margin-top: auto; font-size: 44px; font-weight: 800; font-stretch: 115%; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.faq { display: grid; grid-template-columns: 1fr 1.5fr; gap: 56px; }
+details { padding: 20px 0; border-bottom: 1px solid var(--line); }
+summary { font-size: 20px; font-weight: 600; }
+details p { margin-top: 8px; line-height: 1.55; color: var(--mute); }
+footer { margin-top: 150px; padding: 40px 0 28px; }
+footer .big { font-size: clamp(72px, 17vw, 270px); font-weight: 900; font-stretch: 125%; letter-spacing: -0.05em; line-height: 0.82; }
+footer .row { display: flex; justify-content: space-between; margin-top: 20px; color: var(--onfield2); font-size: 14px; }
+
+/* app */
+.app .appbar { display: flex; align-items: center; gap: 12px; padding: 12px 16px; }
+.app .appbar .sp { flex: 1; }
+.app .appbar .find { background: color-mix(in oklab, var(--onfield) 14%, transparent); color: var(--onfield); }
+.app .appbar .find input::placeholder { color: var(--onfield2); }
+.app .appbar .find .hits { color: #ffd23f; }
+.app .appbar .t { font-weight: 700; font-stretch: 110%; font-size: 18px; }
+.app .counters { display: flex; gap: 40px; padding: 4px 16px 18px; align-items: flex-end; }
+.app .counters .k b { display: block; font-size: 44px; font-weight: 800; font-stretch: 115%; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.app .counters .k span { color: var(--onfield2); font-size: 14px; }
+.app .counters .k.y b { color: #ffd23f; }
+.app .counters .chips { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.chip { display: inline-flex; gap: 8px; align-items: center; background: color-mix(in oklab, var(--onfield) 14%, transparent); border-radius: 999px; padding: 8px 14px; font-size: 14px; }
+.app .sheet { flex: 1; min-height: 0; overflow: hidden; background: var(--bg); border-radius: 20px 20px 0 0; margin-top: -6px; }
+.app { background: var(--field); }
+.app .status { display: flex; gap: 22px; padding: 10px 18px; font-size: 13px; background: var(--bg); color: var(--mute); }
+.app .status .sp { flex: 1; }
+.loader { background: var(--field); color: var(--onfield); }
+.loader p { color: var(--onfield2); }
+.loader .n { font-stretch: 118%; font-size: 96px; }
+@media (max-width: 860px) { .row2, .split, .faq { grid-template-columns: 1fr; } .flow { grid-template-columns: 1fr; } nav.top a { display: none; } }
+</style>
+</head>
+<body>
+<div class="home">
+  <div class="field">
+    <div class="wrap">
+      <nav class="top">
+        <div class="mark">MegaCSV</div><a href="#how">How it works</a><a href="#faq">Questions</a><a href="#">Guides</a><span class="sp"></span>
+        <button class="iconbtn" data-action="theme" aria-label="Switch light or dark"><svg class="icon"><use href="#i-theme"/></svg></button>
+        <button class="btn light" data-action="pick" style="padding:10px 18px">Open a file</button>
+      </nav>
+      <header class="hero">
+        <h1>Open CSV files too big for Excel.</h1>
+        <div class="odo" id="odo" aria-label="Rows"></div>
+        <div class="cap"><span><b>rows</b> in a <b id="gb">6.2 GB</b> file. Excel shows 1,048,576 of them.</span><span>Opens in about <b id="secs">2.1 s*</b></span></div>
+        <div class="ruler"><div class="ticks" id="ticks"></div><input type="range" id="size" min="1" max="50" step="0.1" value="6.2" aria-label="File size in gigabytes" /><div class="lbl"><span>How big is your file? Drag.</span><span>50 GB</span></div></div>
+        <div class="row2">
+          <p>Drop it here. Find the rows you need and send them back to Excel. Your file never leaves this computer.</p>
+          <div class="ctas"><button class="btn light" data-action="pick"><svg class="icon"><use href="#i-up"/></svg>Choose a CSV file</button><button class="btn ghost" data-action="open" data-file="sample_transactions.csv">Try a sample</button></div>
+        </div>
+      </header>
+    </div>
+  </div>
+  <div class="wrap">
+    <section class="band">
+      <h2>The message you came here about.</h2>
+      <div class="split"><div class="quote"><small>Microsoft Excel</small>This data set is too large for the Excel grid. If you save this workbook, you'll lose data that wasn't loaded.</div><p>Nothing is lost here. MegaCSV shows every row of the file, lets you filter it down, and exports the result in Excel-sized parts.</p></div>
+    </section>
+    <section class="band" id="how">
+      <h2>From 48 million rows to the 12,408 you need.</h2>
+      <div class="flow">
+        <div><h3>Open</h3><p>Any size. First rows instantly.</p><div class="big">48,273,485</div></div>
+        <div><h3>Filter</h3><p>vendor contains “Acme”, posted in Q3.</p><div class="big">12,408</div></div>
+        <div><h3>Export to Excel</h3><p>One sheet. Opens cleanly.</p><div class="big">acme_q3.xlsx</div></div>
+      </div>
+    </section>
+    <section class="band faq" id="faq">
+      <h2>Questions</h2>
+      <div>
+        <details open><summary>Is my file uploaded?</summary><p>No. Your browser reads it on this computer. Turn off Wi-Fi and it still works.</p></details>
+        <details><summary>How big can the file be?</summary><p>Tens of gigabytes. The limit is your disk, not Excel.</p></details>
+        <details><summary>Is it really free?</summary><p>Yes. No signup, no install, no ads.</p></details>
+      </div>
+    </section>
+  </div>
+  <footer class="field"><div class="wrap"><div class="big">MegaCSV</div><div class="row"><span>Free. No signup. Works with Wi-Fi off.</span><span>* Placeholder figures, estimated until measured before launch</span></div></div></footer>
+</div>
+
+<div class="app">
+  <div class="field">
+    <div class="appbar">
+      <button class="iconbtn" data-action="home" aria-label="Back to home"><svg class="icon"><use href="#i-back"/></svg></button>
+      <span class="t" data-filename>transactions_2026_Q3.csv</span><span class="sp"></span>
+      <label class="find"><svg class="icon"><use href="#i-search"/></svg><input data-find placeholder="Find in the whole file" /><span class="hits" data-hits></span><kbd style="color:var(--onfield2)">⌘F</kbd></label>
+      <button class="btn ghost" style="padding:10px 16px"><svg class="icon"><use href="#i-cols"/></svg>Columns</button>
+      <button class="btn light" style="padding:10px 16px"><svg class="icon"><use href="#i-down"/></svg>Export to Excel</button>
+      <button class="iconbtn" data-action="theme" aria-label="Switch light or dark"><svg class="icon"><use href="#i-theme"/></svg></button>
+    </div>
+    <div class="counters">
+      <div class="k"><b data-count-app="48273485">0</b><span>rows in file · 6.2 GB</span></div>
+      <div class="k y"><b data-count-app="12408">0</b><span>rows match · fits one Excel sheet</span></div>
+      <div class="chips"><span class="chip">vendor contains “Acme” <svg class="icon" style="width:14px;height:14px"><use href="#i-x"/></svg></span><span class="chip">posted in Q3 2026 <svg class="icon" style="width:14px;height:14px"><use href="#i-x"/></svg></span><span class="chip"><svg class="icon" style="width:14px;height:14px"><use href="#i-plus"/></svg>Filter</span></div>
+    </div>
+  </div>
+  <div class="sheet"><div class="scroller"><table data-grid></table></div></div>
+  <div class="status"><span>Row 18,402,116</span><span>Comma · UTF-8</span><span class="sp"></span><span>Nothing uploaded</span></div>
+</div>
+
+<div class="loader"><div class="box"><div class="n" data-loading-count>0</div><p>rows in <span data-filename>transactions_2026_Q3.csv</span></p><div class="bar" style="background:#ffffff33"><i data-progress style="background:#ffd23f"></i></div></div></div>
+<div class="dropveil">Drop to open</div>
+<script src="shared.js"></script>
+<script>
+// odometer: one column of digits per character, translated to the target digit
+const odo = document.getElementById("odo");
+function setOdo(n) {
+  const s = n.toLocaleString("en-US");
+  if (odo.dataset.len !== String(s.length)) {
+    odo.innerHTML = "";
+    [...s].forEach((ch) => {
+      if (ch === ",") { odo.insertAdjacentHTML("beforeend", '<span class="c">,</span>'); return; }
+      odo.insertAdjacentHTML("beforeend", '<span class="d"><span>' + [...Array(10).keys()].map((k) => "<span>" + k + "</span>").join("") + "</span></span>");
+    });
+    odo.dataset.len = s.length;
+  }
+  const cols = odo.querySelectorAll(".d > span");
+  [...s.replace(/,/g, "")].forEach((ch, i) => (cols[i].style.transform = `translateY(${-Number(ch) * 10}%)`));
+  odo.setAttribute("aria-label", s + " rows");
+}
+const ticks = document.getElementById("ticks");
+const TICKS = 41;
+ticks.innerHTML = "<i></i>".repeat(TICKS);
+const size = document.getElementById("size");
+function update() {
+  const gb = Number(size.value);
+  const rows = Math.round(gb * 7_786_046);
+  setOdo(rows);
+  document.getElementById("gb").textContent = gb.toFixed(1) + " GB";
+  document.getElementById("secs").textContent = (gb / 3).toFixed(1) + " s*";
+  const at = Math.round(((gb - 1) / 49) * (TICKS - 1));
+  ticks.querySelectorAll("i").forEach((t, i) => { t.className = i === at ? "at" : i < at ? "past" : ""; });
+}
+size.addEventListener("input", update);
+setOdo(0);
+requestAnimationFrame(() => requestAnimationFrame(update));
+</script>
+</body>
+</html>

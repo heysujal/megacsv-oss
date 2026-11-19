@@ -1,0 +1,15 @@
+{
+  "name": "megacsv",
+  "private": true,
+  "scripts": {
+    "wasm": "scripts/build-wasm.sh",
+    "dev": "pnpm wasm && pnpm --parallel --filter @megacsv/app --filter @megacsv/site dev",
+    "dev:api": "pnpm build && pnpm --dir worker dev",
+    "build": "pnpm wasm && pnpm --dir app build && pnpm --dir site build && node scripts/combine-dist.mjs",
+    "deploy": "pnpm build && pnpm --dir worker run deploy",
+    "test": "cargo test --workspace",
+    "gen": "cargo run --release -p gen-csv --",
+    "bench": "cargo run --release -p bench --"
+  },
+  "packageManager": "pnpm@9.12.3"
+}

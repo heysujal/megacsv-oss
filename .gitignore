@@ -1,0 +1,32 @@
+/target
+node_modules
+/logs
+/testdata
+/app/src/wasm
+/app/dist
+/dist
+.DS_Store
+*.log
+.env
+
+.dev.vars
+.wrangler
+
+# design skill scratch output
+/.taste-skill
+/.impeccable/review
+/design/logo/renders*/
+/design/logo/whale/renders/
+__pycache__/
+
+/site/dist
+/site/.astro
+
+# Local Claude Code / agent skills: third-party, not ours to publish
+/.claude/
+/.agents/
+/skills-lock.json
+
+# Private data: never publish (commenters' names, Search Console exports)
+/research-data/
+/megacsv.com-*/

@@ -1,0 +1,58 @@
+---
+// Every live problem page, grouped: the hub for people with an error message.
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import { FIX_GROUPS } from "../data/fixes";
+import { isLive } from "../lib/live";
+
+const live = (await getCollection("problems")).filter(isLive);
+const byId = new Map(live.map((e) => [e.id, e]));
+const grouped = new Set(FIX_GROUPS.flatMap(([, pages]) => pages));
+const groups = [
+  ...FIX_GROUPS.map(([heading, pages]) => [heading, pages.flatMap((id) => byId.get(id) ?? [])] as const),
+  ["More fixes", live.filter((e) => !grouped.has(e.id)).sort((a, b) => a.data.heading.localeCompare(b.data.heading))] as const,
+].filter(([, pages]) => pages.length > 0);
+
+const description = "What to do about Excel, Google Sheets, LibreOffice, Notepad++ and pandas errors on big CSV files, one exact message at a time.";
+const site = Astro.site!.href;
+const jsonld = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: site },
+      { "@type": "ListItem", position: 2, name: "Fixes", item: new URL("/fixes", site).href },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Fix a CSV or Excel error",
+    description,
+    url: new URL("/fixes", site).href,
+    hasPart: live.map((e) => ({ "@type": "WebPage", name: e.data.heading, url: new URL(`/${e.id}`, site).href })),
+  },
+];
+---
+
+<Base title="Fix a CSV or Excel error: every message, one page each | MegaCSV" description={description} jsonld={jsonld}>
+  <div class="post col wide">
+    <h1>Fix a CSV or Excel error</h1>
+    <p class="lede-left">Find the message you're seeing. Each page says why it happens and what to do, for files of any size.</p>
+    {
+      groups.map(([heading, pages]) => (
+        <section class="fixgroup">
+          <h2>{heading}</h2>
+          <ul class="fixlist">
+            {pages.map((e) => (
+              <li>
+                <a href={`/${e.id}`}>{e.data.heading}</a>
+                <p class="m">{e.data.description}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</Base>

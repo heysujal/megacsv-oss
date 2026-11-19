@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en" data-default="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MegaCSV · 02 Departure board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="base.css" />
+<style>
+:root { --font: Barlow, system-ui, sans-serif; --display: "Big Shoulders Display", sans-serif;
+  --bg: #d9d9d4; --ink: #121212; --mute: #55554f; --step: #c9c9c3; --step2: #bdbdb6; --line: #b5b5ae;
+  --board: #141414; --flap: #1f1f1f; --flapink: #f4f1e8; --lamp: #ffb21a; --accent: #ffb21a; --on-accent: #121212; --hit: #ffb21a55; --btn-r: 6px; }
+.dark { --bg: #0b0b0b; --ink: #ecebe6; --mute: #8d8c86; --step: #181818; --step2: #242424; --line: #232323; --board: #050505; --flap: #1b1b1b; }
+.wrap { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
+nav.top { display: flex; align-items: center; gap: 28px; height: 76px; }
+.mark { font-family: var(--display); font-weight: 900; font-size: 28px; letter-spacing: 0.02em; text-transform: uppercase; }
+.mark b { color: var(--lamp); }
+nav.top a { text-decoration: none; color: var(--mute); font-weight: 500; }
+nav.top .sp { flex: 1; }
+
+/* the board */
+.board { background: var(--board); border-radius: 18px; padding: 28px 28px 22px; color: var(--flapink); box-shadow: 0 30px 60px -30px #0008; }
+.board .head { display: flex; justify-content: space-between; align-items: center; font-family: var(--display); font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: #9b9a92; font-size: 15px; }
+.board .head .clock { color: var(--lamp); font-size: 18px; }
+.flaps { display: flex; flex-wrap: wrap; gap: 4px 0; margin-top: 18px; }
+.word { display: inline-flex; gap: 3px; margin-right: 18px; }
+.f { width: 0.72em; height: 1.08em; background: var(--flap); border-radius: 4px; display: grid; place-items: center; font-family: var(--display); font-weight: 800; line-height: 1; position: relative; overflow: hidden; }
+.f::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: #000; }
+h1.flaps { font-size: clamp(44px, 6.4vw, 96px); text-transform: uppercase; }
+h1 .lamp .f { color: var(--lamp); }
+.board .sub { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: end; margin-top: 30px; }
+.board .sub p { font-size: 20px; line-height: 1.5; color: #d7d5cc; max-width: 40ch; }
+.board .ctas { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+.board .btn { background: #262626; color: var(--flapink); }
+.board .btn.primary { background: var(--lamp); color: #121212; }
+
+/* departures table */
+.dep { margin-top: 28px; border-top: 2px solid #262626; }
+.dep .r { display: grid; grid-template-columns: 2.2fr 0.8fr 1.2fr 1.6fr; gap: 20px; padding: 12px 0; border-bottom: 1px solid #1e1e1e; align-items: center; font-family: var(--display); font-weight: 800; font-size: 26px; text-transform: uppercase; letter-spacing: 0.03em; }
+.dep .r.h { font-size: 13px; color: #8a897f; letter-spacing: 0.12em; font-weight: 600; padding: 10px 0; }
+.dep .st { display: flex; align-items: center; gap: 10px; }
+.dep .st i { width: 10px; height: 10px; border-radius: 50%; background: var(--lamp); box-shadow: 0 0 0 4px #ffb21a22; }
+.dep .st.ok i { background: #43d17a; box-shadow: 0 0 0 4px #43d17a22; }
+.dep .st.ok { color: #43d17a; }
+.dep .st.wait { color: var(--lamp); }
+
+section.band { padding: 150px 0 0; }
+h2 { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(40px, 5vw, 76px); line-height: 0.92; letter-spacing: 0.005em; max-width: 16ch; }
+.three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 56px; }
+.three .n { font-family: var(--display); font-weight: 900; font-size: 120px; line-height: 0.8; color: var(--accent); }
+.dark .three .n { color: var(--lamp); }
+.three h3 { font-size: 24px; margin-top: 20px; }
+.three p { margin-top: 8px; font-size: 18px; line-height: 1.5; color: var(--mute); }
+.notice { margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.notice .card { background: var(--board); color: var(--flapink); border-radius: 18px; padding: 32px; }
+.notice .card .k { font-family: var(--display); font-weight: 800; color: #ff6b5a; text-transform: uppercase; letter-spacing: 0.08em; }
+.notice .card p { margin-top: 12px; font-size: 20px; line-height: 1.45; }
+.notice > p { font-size: 22px; line-height: 1.5; }
+.faq { display: grid; grid-template-columns: 1fr 1.5fr; gap: 56px; }
+details { padding: 22px 0; border-bottom: 2px solid var(--line); }
+summary { font-size: 22px; font-weight: 600; }
+details p { margin-top: 8px; color: var(--mute); font-size: 18px; line-height: 1.5; }
+footer { margin-top: 150px; background: var(--board); color: var(--flapink); padding: 40px 0 28px; }
+footer .big { font-family: var(--display); font-weight: 900; font-size: clamp(80px, 18vw, 280px); line-height: 0.82; text-transform: uppercase; }
+footer .big b { color: var(--lamp); }
+footer .row { display: flex; justify-content: space-between; color: #8d8c86; margin-top: 20px; font-size: 14px; }
+
+/* app */
+.app { background: var(--board); color: var(--flapink); --step: #1a1a1a; --step2: #262626; --line: #1d1d1d; --mute: #85847d; --head: #111; --bg: #0b0b0b; --ink: #ecebe6; --sel: #2a2414; }
+.appbar { display: flex; align-items: center; gap: 14px; padding: 14px 18px; }
+.appbar .t { font-family: var(--display); font-weight: 800; font-size: 26px; text-transform: uppercase; letter-spacing: 0.03em; }
+.appbar .sp { flex: 1; }
+.ticker { display: flex; align-items: center; gap: 24px; padding: 0 18px 14px; }
+.ticker .slot { display: flex; flex-direction: column; gap: 6px; }
+.ticker .slot small { font-family: var(--display); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #8a897f; font-size: 12px; }
+.ticker .flaps { margin: 0; font-size: 34px; }
+.ticker .lamp .f { color: var(--lamp); }
+.chips { display: flex; gap: 8px; margin-left: auto; flex-wrap: wrap; justify-content: flex-end; }
+.chip { display: inline-flex; gap: 8px; align-items: center; background: #1f1f1f; border-radius: 6px; padding: 8px 12px; font-size: 14px; }
+.chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--lamp); }
+.app .sheet { flex: 1; min-height: 0; margin: 0 12px; border-radius: 12px; overflow: hidden; background: #0e0e0e; }
+.app table[data-grid] { font-size: 14px; }
+.app table[data-grid] thead th { font-family: var(--display); text-transform: uppercase; letter-spacing: 0.08em; font-size: 13px; color: #a8a79f; }
+.status { display: flex; gap: 24px; padding: 12px 20px; font-size: 13px; color: #85847d; }
+.status b { color: var(--lamp); font-weight: 600; }
+.loader { background: var(--board); color: var(--flapink); }
+.loader .n { font-family: var(--display); font-weight: 900; color: var(--lamp); font-size: 96px; letter-spacing: 0.01em; }
+@media (max-width: 860px) { .board .sub, .three, .notice, .faq { grid-template-columns: 1fr; } .dep .r { grid-template-columns: 1.6fr 1fr; } .dep .r > :nth-child(n+3) { display: none; } nav.top a { display: none; } }
+</style>
+</head>
+<body>
+<div class="home">
+  <div class="wrap">
+    <nav class="top">
+      <div class="mark">Mega<b>CSV</b></div>
+      <a href="#how">How it works</a><a href="#faq">Questions</a><a href="#">Guides</a>
+      <span class="sp"></span>
+      <button class="iconbtn" data-action="theme" aria-label="Switch light or dark"><svg class="icon"><use href="#i-theme"/></svg></button>
+      <button class="btn ink" data-action="pick">Open a file</button>
+    </nav>
+
+    <div class="board">
+      <div class="head"><span>Arrivals · your computer only</span><span class="clock" id="clock">09:41</span></div>
+      <h1 class="flaps" data-flap="TOO BIG FOR|EXCEL?|*OPEN IT HERE."></h1>
+      <div class="sub">
+        <p>Drop a CSV of any size. Find the rows you need and send them back to Excel. Nothing leaves this computer.</p>
+        <div class="ctas"><button class="btn primary" data-action="pick"><svg class="icon"><use href="#i-up"/></svg>Choose a CSV file</button><button class="btn" data-action="open" data-file="sample_transactions.csv">Try a sample file</button></div>
+      </div>
+      <div class="dep">
+        <div class="r h"><span>File</span><span>Size</span><span>Rows</span><span>Status</span></div>
+        <div class="r"><span>transactions_q3.csv</span><span>6.2 GB</span><span class="tnum">48,273,485</span><span class="st ok"><i></i>Opened · 2.1 s*</span></div>
+        <div class="r"><span>crawl_export.csv</span><span>3.1 GB</span><span class="tnum">12,004,211</span><span class="st wait"><i></i>Filtering</span></div>
+        <div class="r"><span>orders_2026.csv</span><span>840 MB</span><span class="tnum">5,912,330</span><span class="st ok"><i></i>Sent to Excel</span></div>
+      </div>
+    </div>
+
+    <section class="band">
+      <h2>Excel said it was too large. It isn't.</h2>
+      <div class="notice">
+        <div class="card"><div class="k">Microsoft Excel</div><p>This data set is too large for the Excel grid. If you save this workbook, you'll lose data that wasn't loaded.</p></div>
+        <p>Excel stops at 1,048,576 rows. MegaCSV shows every row of the file, then exports just the rows you need in Excel-sized parts.</p>
+      </div>
+    </section>
+
+    <section class="band" id="how">
+      <h2>Three stops. Then you're back in Excel.</h2>
+      <div class="three">
+        <div><div class="n">A</div><h3>Open any size</h3><p>Gigabytes open in seconds. Scroll from the first row to the last instantly.</p></div>
+        <div><div class="n">B</div><h3>Find and filter</h3><p>Search the whole file. Filter by vendor, date or amount without formulas.</p></div>
+        <div><div class="n">C</div><h3>Export to Excel</h3><p>Results over 1,048,576 rows are split into Excel-sized parts for you.</p></div>
+      </div>
+    </section>
+
+    <section class="band faq" id="faq">
+      <h2>Questions</h2>
+      <div>
+        <details open><summary>Is my file uploaded?</summary><p>No. Your browser reads it on this computer. Turn off Wi-Fi and it still works.</p></details>
+        <details><summary>How big can the file be?</summary><p>Tens of gigabytes. The limit is your disk, not Excel.</p></details>
+        <details><summary>Do I need to install anything?</summary><p>No. Free, no signup, runs in your browser.</p></details>
+      </div>
+    </section>
+  </div>
+  <footer><div class="wrap"><div class="big">Mega<b>CSV</b></div><div class="row"><span>Free. No signup. No install. Works with Wi-Fi off.</span><span>* Placeholder figure, to be measured before launch</span></div></div></footer>
+</div>
+
+<div class="app">
+  <div class="appbar">
+    <button class="iconbtn" data-action="home" aria-label="Back to home" style="background:#1f1f1f"><svg class="icon"><use href="#i-back"/></svg></button>
+    <span class="t" data-filename>transactions_2026_Q3.csv</span>
+    <span class="sp"></span>
+    <label class="find"><svg class="icon"><use href="#i-search"/></svg><input data-find placeholder="Find in the whole file" /><span class="hits" data-hits></span><kbd>⌘F</kbd></label>
+    <button class="btn"><svg class="icon"><use href="#i-cols"/></svg>Columns</button>
+    <button class="btn primary"><svg class="icon"><use href="#i-down"/></svg>Export to Excel</button>
+    <button class="iconbtn" data-action="theme" aria-label="Switch light or dark" style="background:#1f1f1f"><svg class="icon"><use href="#i-theme"/></svg></button>
+  </div>
+  <div class="ticker">
+    <div class="slot"><small>Rows in file</small><div class="flaps" data-flap="48,273,485"></div></div>
+    <div class="slot"><small>Rows matching</small><div class="flaps lamp" data-flap="*12,408"></div></div>
+    <div class="chips"><span class="chip"><i></i>vendor contains “Acme”</span><span class="chip"><i></i>posted_date in Q3 2026</span><span class="chip"><svg class="icon" style="width:14px;height:14px"><use href="#i-plus"/></svg>Add filter</span></div>
+  </div>
+  <div class="sheet"><div class="scroller"><table data-grid></table></div></div>
+  <div class="status"><span>Row <b>18,402,116</b> selected</span><span><b>12,408</b> rows fit in one Excel sheet</span><span>Nothing uploaded</span></div>
+</div>
+
+<div class="loader"><div class="box"><div class="n" data-loading-count>0</div><p>rows arriving from <span data-filename>transactions_2026_Q3.csv</span></p><div class="bar"><i data-progress style="background:var(--lamp)"></i></div></div></div>
+<div class="dropveil">Drop to open</div>
+<script src="shared.js"></script>
+<script>
+// split-flap cascade: each character cycles through letters, then settles, staggered left to right
+const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+function flap(el) {
+  const lines = el.dataset.flap.split("|");
+  el.innerHTML = "";
+  let k = 0;
+  lines.forEach((line) => {
+    const lamp = line.startsWith("*");
+    if (lamp) line = line.slice(1);
+    line.split(" ").forEach((w) => {
+      const word = document.createElement("span");
+      word.className = "word" + (lamp ? " lamp" : "");
+      [...w].forEach((ch) => {
+        const f = document.createElement("span");
+        f.className = "f";
+        f.textContent = " ";
+        word.appendChild(f);
+        const delay = k++ * 28;
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) { f.textContent = ch; return; }
+        let n = 0;
+        setTimeout(() => {
+          const t = setInterval(() => {
+            f.textContent = n++ > 6 ? ch : GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+            if (n > 7) clearInterval(t);
+          }, 45);
+        }, delay);
+      });
+      el.appendChild(word);
+    });
+    if (el.tagName === "H1") el.appendChild(Object.assign(document.createElement("span"), { style: "flex-basis:100%" }));
+  });
+}
+document.querySelectorAll("[data-flap]").forEach(flap);
+document.addEventListener("click", (e) => { if (e.target.closest('[data-action="open"],[data-action="pick"]')) setTimeout(() => document.querySelectorAll(".app [data-flap]").forEach(flap), 1300); });
+const d = new Date(); document.getElementById("clock").textContent = String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+</script>
+</body>
+</html>

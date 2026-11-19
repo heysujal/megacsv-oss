@@ -1,0 +1,44 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "megacsv",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  // Same as the dashboard; a deploy keeps these attached.
+  "routes": [
+    { "pattern": "megacsv.com", "custom_domain": true },
+    { "pattern": "www.megacsv.com", "custom_domain": true }
+  ],
+  // The website and the app (at /app/), merged by `pnpm build`. The Worker runs first on every
+  // request: /api/*, the www and http redirects, and 301s for /page/ and /page.html (src/index.ts).
+  "assets": {
+    "directory": "../dist",
+    "binding": "ASSETS",
+    // Missing pages get site/src/pages/404.astro with a 404 status.
+    "not_found_handling": "404-page",
+    "run_worker_first": true
+  },
+  // Daily crons (src/index.ts):
+  // - "30 0 * * *" (06:00 India time): sends IndexNow the pages whose sitemap date is yesterday.
+  // - "35 18 * * *" (00:05 India time): the rebuild for the publish queue (site/publish-queue.txt)
+  //   through the DEPLOY_HOOK_URL secret. OFF while the queue is empty, since it would rebuild an
+  //   unchanged site every night. To turn it on, swap the two lines below.
+  // "triggers": { "crons": ["30 0 * * *", "35 18 * * *"] },
+  "triggers": { "crons": ["30 0 * * *"] },
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true
+    }
+  },
+  // Feedback is stored, not emailed: the free Worker email can only reach verified inboxes, and
+  // emailing hi@megacsv.com needs paid Email Sending. Read it in the dashboard (D1 → megacsv-feedback)
+  // or with `npx wrangler d1 execute megacsv-feedback --remote --command "SELECT * FROM feedback"`.
+  // `pnpm dev:api` uses a local copy; create it once with `npx wrangler d1 migrations apply megacsv-feedback --local`.
+  "d1_databases": [
+    {
+      "binding": "FEEDBACK_DB",
+      "database_name": "megacsv-feedback",
+      "database_id": "d5c2b124-c9d6-4e7d-a9da-2e578ca685a1"
+    }
+  ]
+}

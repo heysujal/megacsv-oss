@@ -1,0 +1,32 @@
+---
+// A plain text page (privacy, terms, about, contact) in the blog's reading column.
+import Base from "../layouts/Base.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  heading: string;
+  updated?: string;
+}
+const { title, description, heading, updated } = Astro.props;
+const site = Astro.site!.href;
+const jsonld = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: site },
+      { "@type": "ListItem", position: 2, name: heading, item: new URL(Astro.url.pathname.replace(/\.html$/, ""), site).href },
+    ],
+  },
+];
+---
+
+<Base title={title} description={description} jsonld={jsonld}>
+  <article class="post col">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a></nav>
+    <h1>{heading}</h1>
+    {updated && <p class="m dates">Last updated {updated}</p>}
+    <slot />
+  </article>
+</Base>

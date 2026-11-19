@@ -1,0 +1,17 @@
+---
+import Base from "../layouts/Base.astro";
+import { APP_URL } from "../data/home";
+---
+
+<Base title="Page not found | MegaCSV" description="This page doesn't exist. Open a CSV file, or read the blog." noindex>
+  <article class="post col">
+    <h1>This page doesn't exist</h1>
+    <p>The link may be old or mistyped. Here's where most people are headed:</p>
+    <ul>
+      <li><a href={APP_URL}>Open a CSV file</a> in MegaCSV</li>
+      <li><a href="/">The homepage</a>: what MegaCSV does and how fast it is</li>
+      <li><a href="/blog">The blog</a>: Excel limits, big files and how to get your rows back into Excel</li>
+    </ul>
+    <p>If you followed a link on our site, please tell us at <a href="mailto:hi@megacsv.com">hi@megacsv.com</a>.</p>
+  </article>
+</Base>

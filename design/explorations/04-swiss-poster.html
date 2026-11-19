@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MegaCSV · 04 Swiss poster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="base.css" />
+<style>
+:root { --font: Archivo, system-ui, sans-serif; --bg: #ffffff; --ink: #0b0b0b; --mute: #5c5c5c; --step: #f1f1f1; --step2: #e5e5e5; --line: #e6e6e6;
+  --accent: #e4002b; --on-accent: #fff; --hit: #ffd6dd; --btn-r: 0px; }
+.dark { --bg: #0b0b0b; --ink: #f5f5f5; --mute: #a3a3a3; --step: #171717; --step2: #232323; --line: #222; --hit: #5a0f1d; }
+.wrap { padding: 0 28px; }
+nav.top { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; height: 72px; align-items: center; font-size: 15px; }
+.mark { grid-column: span 3; font-weight: 800; font-stretch: 112%; font-size: 20px; letter-spacing: -0.02em; }
+nav.top a { text-decoration: none; color: var(--ink); font-weight: 500; }
+nav.top .end { grid-column: 10 / span 3; display: flex; gap: 10px; justify-content: flex-end; }
+.hero { padding: 6vh 0 0; }
+h1 { font-size: clamp(56px, 10.4vw, 184px); line-height: 0.88; letter-spacing: -0.05em; font-weight: 850; font-stretch: 108%; }
+h1 .slot { display: inline-flex; align-items: center; vertical-align: 0.06em; height: 0.78em; padding: 0 0.22em; margin: 0 0.06em; background: var(--accent); color: #fff; font-size: 0.32em; letter-spacing: -0.02em; font-weight: 700; font-stretch: 100%; gap: 0.3em; }
+h1 .slot small { font-size: 0.42em; font-weight: 500; opacity: 0.85; letter-spacing: 0; }
+h1 .red { color: var(--accent); }
+.under { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; margin-top: 48px; align-items: start; }
+.under .lede { grid-column: 1 / span 5; font-size: 24px; line-height: 1.4; font-weight: 500; }
+.under .ctas { grid-column: 7 / span 6; display: flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
+.btn { padding: 18px 26px; font-size: 17px; }
+.facts { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 88px; background: var(--ink); color: var(--bg); }
+.facts > div { padding: 28px; }
+.facts > div + div { box-shadow: inset 1px 0 0 color-mix(in oklab, var(--bg) 20%, transparent); }
+.facts b { display: block; font-size: 30px; font-weight: 800; letter-spacing: -0.03em; font-stretch: 105%; }
+.facts span { opacity: 0.7; font-size: 16px; }
+section.band { padding: 160px 0 0; display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; }
+h2 { grid-column: 1 / span 6; font-size: clamp(40px, 4.8vw, 80px); line-height: 0.92; letter-spacing: -0.045em; font-weight: 800; font-stretch: 106%; }
+.band .right { grid-column: 7 / span 6; }
+.errorquote { font-size: 30px; line-height: 1.25; font-weight: 600; letter-spacing: -0.02em; }
+.errorquote::before { content: "Excel:"; display: block; color: var(--accent); font-size: 16px; font-weight: 700; margin-bottom: 10px; letter-spacing: 0; }
+.band .right p.after { margin-top: 28px; font-size: 20px; line-height: 1.5; }
+.steps { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
+.steps div { padding-top: 18px; box-shadow: inset 0 4px 0 var(--ink); }
+.steps div:first-child { box-shadow: inset 0 4px 0 var(--accent); }
+.steps h3 { font-size: 30px; letter-spacing: -0.03em; font-weight: 800; }
+.steps p { margin-top: 10px; font-size: 18px; line-height: 1.5; color: var(--mute); max-width: 32ch; }
+details { padding: 20px 0; box-shadow: inset 0 -2px 0 var(--ink); }
+summary { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
+details p { margin-top: 8px; font-size: 18px; line-height: 1.5; color: var(--mute); }
+footer { margin-top: 160px; background: var(--accent); color: #fff; padding: 28px; }
+footer .big { font-size: clamp(80px, 19vw, 340px); font-weight: 900; letter-spacing: -0.065em; line-height: 0.8; font-stretch: 112%; }
+footer .row { display: flex; justify-content: space-between; margin-top: 20px; font-size: 15px; }
+
+/* app */
+.appbar { display: grid; grid-template-columns: auto 1fr auto auto auto auto; gap: 10px; align-items: center; padding: 10px; background: var(--ink); color: var(--bg); }
+.appbar .t { font-weight: 800; font-stretch: 108%; font-size: 20px; letter-spacing: -0.02em; }
+.appbar .t span { font-weight: 500; font-stretch: 100%; font-size: 14px; opacity: 0.7; margin-left: 12px; }
+.appbar .iconbtn, .appbar .btn:not(.primary) { background: color-mix(in oklab, var(--bg) 14%, var(--ink)); color: var(--bg); }
+.appbar .find { background: color-mix(in oklab, var(--bg) 14%, var(--ink)); color: var(--bg); width: 380px; }
+.counts { display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px; padding: 20px 14px 16px; align-items: end; }
+.counts .k { grid-column: span 3; }
+.counts .k b { display: block; font-size: 52px; font-weight: 850; letter-spacing: -0.045em; line-height: 0.9; font-variant-numeric: tabular-nums; font-stretch: 106%; }
+.counts .k.red b { color: var(--accent); }
+.counts .k span { font-size: 14px; color: var(--mute); }
+.counts .chips { grid-column: 7 / span 6; display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.chip { background: var(--step); padding: 8px 12px; font-size: 14px; font-weight: 500; display: inline-flex; gap: 8px; align-items: center; }
+.chip b { color: var(--accent); }
+.app .sheet { flex: 1; min-height: 0; overflow: hidden; box-shadow: inset 0 3px 0 var(--ink); }
+.app { --head: var(--bg); --sel: var(--accent); }
+.app table[data-grid] thead th { box-shadow: inset 0 -2px 0 var(--ink); font-weight: 700; }
+.app table[data-grid] tr.sel td, .app table[data-grid] tr.sel td.rn { color: #fff; }
+.status { display: flex; gap: 24px; padding: 10px 14px; font-size: 13px; background: var(--step); }
+@media (max-width: 860px) { .under .lede, .under .ctas, h2, .band .right { grid-column: 1 / -1; } .facts, .steps { grid-template-columns: 1fr; } nav.top a { display: none; } h1 .slot { display: none; } }
+</style>
+</head>
+<body>
+<div class="home">
+  <div class="wrap">
+    <nav class="top">
+      <div class="mark">MegaCSV</div>
+      <a href="#how">How it works</a><a href="#faq">Questions</a><a href="#">Guides</a>
+      <div class="end"><button class="iconbtn" data-action="theme" aria-label="Switch light or dark"><svg class="icon"><use href="#i-theme"/></svg></button><button class="btn ink" data-action="pick" style="padding:10px 16px;font-size:15px">Open a file</button></div>
+    </nav>
+    <header class="hero">
+      <h1>Too big for <span class="slot"><span data-count-home="48273485">0</span><small>rows</small></span> Excel?<br /><span class="red">Open it here.</span></h1>
+      <div class="under">
+        <p class="lede">Drop a CSV of any size. Find the rows you need and send them back to Excel. Your file never leaves this computer.</p>
+        <div class="ctas"><button class="btn primary" data-action="pick"><svg class="icon"><use href="#i-up"/></svg>Choose a CSV file</button><button class="btn" data-action="open" data-file="sample_transactions.csv">Try a sample file</button></div>
+      </div>
+      <div class="facts"><div><b>2 seconds*</b><span>to open 48 million rows</span></div><div><b>Wi-Fi off</b><span>and it still works. Nothing uploaded.</span></div><div><b>Free</b><span>No signup. No install.</span></div></div>
+    </header>
+
+    <section class="band">
+      <h2>Excel gives up at row 1,048,576.</h2>
+      <div class="right"><p class="errorquote">This data set is too large for the Excel grid. If you save this workbook, you'll lose data that wasn't loaded.</p><p class="after">MegaCSV opens all of it, lets you filter down to what matters, and exports Excel-sized parts.</p></div>
+    </section>
+
+    <section class="band" id="how">
+      <h2>Open. Narrow down. Back to Excel.</h2>
+      <div class="steps">
+        <div><h3>Open any size</h3><p>Gigabytes in seconds. Scroll from the first row to the last instantly.</p></div>
+        <div><h3>Find and filter</h3><p>Search the whole file. Filter columns in plain words, no formulas.</p></div>
+        <div><h3>Export to Excel</h3><p>Results over Excel's limit are split into parts automatically.</p></div>
+      </div>
+    </section>
+
+    <section class="band" id="faq">
+      <h2>Questions</h2>
+      <div class="right">
+        <details open><summary>Is my file uploaded?</summary><p>No. Your browser reads it on this computer. Turn off Wi-Fi and it still works.</p></details>
+        <details><summary>How big can the file be?</summary><p>Tens of gigabytes. The limit is your disk, not Excel.</p></details>
+        <details><summary>Will it change my data?</summary><p>No. Values are shown exactly as in the file.</p></details>
+      </div>
+    </section>
+  </div>
+  <footer><div class="big">MegaCSV</div><div class="row"><span>Free CSV viewer for files too big for Excel</span><span>* Placeholder figure, to be measured before launch</span></div></footer>
+</div>
+
+<div class="app">
+  <div class="appbar">
+    <button class="iconbtn" data-action="home" aria-label="Back to home"><svg class="icon"><use href="#i-back"/></svg></button>
+    <div class="t" data-filename>transactions_2026_Q3.csv</div>
+    <label class="find"><svg class="icon"><use href="#i-search"/></svg><input data-find placeholder="Find in the whole file" /><span class="hits" data-hits></span><kbd>⌘F</kbd></label>
+    <button class="btn"><svg class="icon"><use href="#i-cols"/></svg>Columns</button>
+    <button class="btn primary"><svg class="icon"><use href="#i-down"/></svg>Export to Excel</button>
+    <button class="iconbtn" data-action="theme" aria-label="Switch light or dark"><svg class="icon"><use href="#i-theme"/></svg></button>
+  </div>
+  <div class="counts">
+    <div class="k"><b data-count-app="48273485">0</b><span>rows in the file · 6.2 GB</span></div>
+    <div class="k red"><b data-count-app="12408">0</b><span>rows match · fits one Excel sheet</span></div>
+    <div class="chips"><span class="chip"><b>vendor</b> contains “Acme”</span><span class="chip"><b>posted_date</b> in Q3 2026</span><span class="chip"><svg class="icon" style="width:14px;height:14px"><use href="#i-plus"/></svg>Filter</span></div>
+  </div>
+  <div class="sheet"><div class="scroller"><table data-grid></table></div></div>
+  <div class="status"><span>Row 18,402,116</span><span>Comma separated · UTF-8</span><span>Nothing uploaded</span></div>
+</div>
+
+<div class="loader"><div class="box"><div class="n" data-loading-count>0</div><p>rows in <span data-filename>transactions_2026_Q3.csv</span></p><div class="bar" style="border-radius:0"><i data-progress></i></div></div></div>
+<div class="dropveil" style="border-radius:0">Drop to open</div>
+<script src="shared.js"></script>
+</body>
+</html>

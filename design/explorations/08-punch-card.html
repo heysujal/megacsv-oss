@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MegaCSV · 08 Punch card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="base.css" />
+<style>
+:root { --font: "Bricolage Grotesque", system-ui, sans-serif; --bg: #f6efe6; --card: #f2b8a2; --cardink: #5b2416; --ink: #26150f; --mute: #6d5a50; --step: #ede3d6; --step2: #e2d5c5; --line: #e4d8ca;
+  --accent: #c2361b; --on-accent: #fff; --hit: #ffd9c9; --hole: #26150f; --btn-r: 10px; --card2: #a9d2c2; --card3: #b9c4f0; }
+.dark { --bg: #17110e; --card: #3a1d14; --cardink: #f2b8a2; --ink: #f3e7dc; --mute: #b39d90; --step: #221a15; --step2: #2e241e; --line: #2b211c; --accent: #ff7a57; --on-accent: #1a0d08; --hit: #4b2214; --hole: #ffb08f; --card2: #16302a; --card3: #1d2446; }
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+nav.top { display: flex; align-items: center; gap: 26px; height: 74px; }
+.mark { font-weight: 800; font-size: 24px; letter-spacing: -0.03em; }
+nav.top a { color: var(--mute); text-decoration: none; font-weight: 500; }
+nav.top .sp { flex: 1; }
+.hero { padding: 56px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; }
+h1 { font-size: clamp(48px, 6vw, 92px); line-height: 0.96; letter-spacing: -0.045em; font-weight: 800; font-variation-settings: "opsz" 96; }
+.lede { font-size: 20px; line-height: 1.5; max-width: 36ch; }
+.ctas { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
+/* the card */
+.pc { margin-top: 56px; background: var(--card); color: var(--cardink); border-radius: 6px 22px 22px 22px; padding: 22px 28px 26px; position: relative; clip-path: polygon(34px 0, 100% 0, 100% 100%, 0 100%, 0 34px); }
+.pc .top { display: flex; justify-content: space-between; font-weight: 700; font-size: 15px; letter-spacing: -0.01em; }
+.pc .printed { font-weight: 800; font-size: clamp(18px, 2vw, 26px); margin-top: 8px; letter-spacing: 0.06em; font-variant-numeric: tabular-nums; }
+.holes { display: grid; grid-template-columns: repeat(80, 1fr); grid-template-rows: repeat(12, 22px); gap: 3px 2px; margin-top: 14px; }
+.holes i { display: grid; place-items: center; font-style: normal; font-size: 9px; font-weight: 600; opacity: 0.55; font-variant-numeric: tabular-nums; border-radius: 2px; }
+.holes i.p { background: var(--hole); opacity: 1; color: transparent; transform: scaleY(0.2); animation: punch 220ms cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+@keyframes punch { to { transform: scaleY(1); } }
+.pc .bottom { display: flex; justify-content: space-between; margin-top: 14px; font-size: 14px; font-weight: 600; }
+.stack { position: relative; }
+.stack::before, .stack::after { content: ""; position: absolute; left: 14px; right: -14px; top: 40px; bottom: -14px; border-radius: 22px; background: var(--card2); z-index: -1; clip-path: polygon(34px 0, 100% 0, 100% 100%, 0 100%, 0 34px); }
+.stack::after { left: 28px; right: -28px; top: 54px; bottom: -28px; background: var(--card3); z-index: -2; }
+.stack { z-index: 0; isolation: isolate; margin-right: 28px; }
+.trust { display: flex; gap: 24px; margin-top: 64px; font-size: 17px; flex-wrap: wrap; }
+.trust span { display: inline-flex; gap: 8px; align-items: center; }
+section.band { padding: 150px 0 0; }
+h2 { font-size: clamp(36px, 4.2vw, 62px); line-height: 1; letter-spacing: -0.04em; font-weight: 800; max-width: 17ch; }
+.cards3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 44px; }
+.cards3 > div { border-radius: 4px 20px 20px 20px; padding: 26px; min-height: 260px; display: flex; flex-direction: column; clip-path: polygon(24px 0, 100% 0, 100% 100%, 0 100%, 0 24px); color: var(--cardink); }
+.cards3 > div:nth-child(1) { background: var(--card); }
+.cards3 > div:nth-child(2) { background: var(--card2); }
+.cards3 > div:nth-child(3) { background: var(--card3); }
+.dark .cards3 > div { color: var(--ink); }
+.cards3 h3 { font-size: 26px; letter-spacing: -0.03em; }
+.cards3 p { margin-top: 8px; line-height: 1.5; font-size: 17px; }
+.cards3 .x { margin-top: auto; font-weight: 700; font-variant-numeric: tabular-nums; }
+.err { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 44px; align-items: center; }
+.err blockquote { background: var(--step); border-radius: 20px; padding: 30px; font-size: 22px; line-height: 1.45; }
+.err blockquote small { display: block; font-size: 14px; color: var(--mute); margin-bottom: 8px; }
+.err p { font-size: 21px; line-height: 1.5; }
+.faq { display: grid; grid-template-columns: 1fr 1.5fr; gap: 56px; }
+details { padding: 20px 0; border-bottom: 2px solid var(--line); }
+summary { font-size: 21px; font-weight: 700; letter-spacing: -0.01em; }
+details p { margin-top: 8px; line-height: 1.55; color: var(--mute); font-size: 17px; }
+footer { margin-top: 150px; padding: 40px 0 28px; background: var(--card); color: var(--cardink); }
+footer .big { font-size: clamp(72px, 16vw, 250px); font-weight: 800; letter-spacing: -0.06em; line-height: 0.84; }
+footer .row { display: flex; justify-content: space-between; margin-top: 20px; font-size: 14px; font-weight: 600; }
+
+/* app */
+.appbar { display: flex; align-items: center; gap: 12px; padding: 12px 16px; }
+.appbar .t { font-weight: 800; font-size: 18px; letter-spacing: -0.02em; }
+.appbar .t span { color: var(--mute); font-weight: 500; font-size: 14px; margin-left: 8px; font-variant-numeric: tabular-nums; }
+.appbar .sp { flex: 1; }
+.lane { display: flex; gap: 10px; padding: 0 16px 14px; align-items: stretch; }
+.tag { border-radius: 4px 14px 14px 14px; padding: 10px 14px; clip-path: polygon(12px 0, 100% 0, 100% 100%, 0 100%, 0 12px); color: var(--cardink); font-size: 14px; display: flex; flex-direction: column; justify-content: center; }
+.dark .tag { color: var(--ink); }
+.tag b { font-size: 24px; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.tag.a { background: var(--card); min-width: 210px; }
+.tag.b { background: var(--card2); min-width: 190px; }
+.tag.f { background: var(--step); color: var(--ink); display: block; align-self: center; font-size: 16px; line-height: 1.5; padding: 14px 18px; }
+.tag.f u { text-decoration: none; font-weight: 700; color: var(--accent); }
+.lane .sp { flex: 1; }
+.app .sheet { flex: 1; min-height: 0; overflow: hidden; margin: 0 16px; border-radius: 16px; background: var(--bg); box-shadow: 0 0 0 2px var(--line); }
+.app { --head: var(--step); }
+.app table[data-grid] thead th { font-weight: 700; }
+.app table[data-grid] tr.sel td { background: var(--card); color: var(--cardink); }
+.status { display: flex; gap: 22px; padding: 10px 18px; font-size: 13px; color: var(--mute); font-weight: 500; }
+.status .sp { flex: 1; }
+@media (max-width: 860px) { .hero, .err, .faq { grid-template-columns: 1fr; } .cards3 { grid-template-columns: 1fr; } nav.top a { display: none; } .holes { grid-template-columns: repeat(40, 1fr); } .holes i:nth-child(80n+41), .holes i { } }
+</style>
+</head>
+<body>
+<div class="home">
+  <div class="wrap">
+    <nav class="top">
+      <div class="mark">MegaCSV</div><a href="#how">How it works</a><a href="#faq">Questions</a><a href="#">Guides</a><span class="sp"></span>
+      <button class="iconbtn" data-action="theme" aria-label="Switch light or dark"><svg class="icon"><use href="#i-theme"/></svg></button>
+      <button class="btn ink" data-action="pick">Open a file</button>
+    </nav>
+    <header class="hero">
+      <h1>Open CSV files too big for Excel.</h1>
+      <div>
+        <p class="lede">One row of your file is one card. MegaCSV reads millions of them in seconds, finds the ones you need and sends them back to Excel.</p>
+        <div class="ctas"><button class="btn primary" data-action="pick"><svg class="icon"><use href="#i-up"/></svg>Choose a CSV file</button><button class="btn" data-action="open" data-file="sample_transactions.csv">Try a sample file</button></div>
+      </div>
+    </header>
+    <div class="stack">
+      <div class="pc" data-action="open" data-file="sample_transactions.csv" style="cursor:pointer">
+        <div class="top"><span>transactions_q3.csv</span><span>card 18,402,116 of <span data-count-home="48273485">0</span></span></div>
+        <div class="printed">TX-090412121,2026-08-03,SOYLENT FOODS,6200 FREIGHT,14298.70,EUR,POSTED</div>
+        <div class="holes" id="holes"></div>
+        <div class="bottom"><span>Read on this computer. Never uploaded.</span><span>Click the card to open a sample</span></div>
+      </div>
+    </div>
+    <div class="trust"><span><svg class="icon"><use href="#i-wifi"/></svg>Works with Wi-Fi off</span><span><svg class="icon"><use href="#i-bolt"/></svg>48 million rows in about 2 seconds*</span><span><svg class="icon"><use href="#i-gift"/></svg>Free, no signup, no install</span></div>
+
+    <section class="band">
+      <h2>Excel's deck holds 1,048,576 cards.</h2>
+      <div class="err"><blockquote><small>Microsoft Excel</small>This data set is too large for the Excel grid. If you save this workbook, you'll lose data that wasn't loaded.</blockquote><p>Your file has more. MegaCSV opens every row, filters them down, and exports Excel-sized decks.</p></div>
+    </section>
+    <section class="band" id="how">
+      <h2>Open the whole deck. Keep the cards you need.</h2>
+      <div class="cards3">
+        <div><h3>Open any size</h3><p>Gigabytes in seconds. Jump to any row instantly.</p><span class="x">48,273,485 rows</span></div>
+        <div><h3>Find and filter</h3><p>Search everything. Filter columns in plain words.</p><span class="x">12,408 match</span></div>
+        <div><h3>Back to Excel</h3><p>Export the matches, split at Excel's limit for you.</p><span class="x">acme_q3.xlsx</span></div>
+      </div>
+    </section>
+    <section class="band faq" id="faq">
+      <h2>Questions</h2>
+      <div>
+        <details open><summary>Is my file uploaded?</summary><p>No. Your browser reads it on this computer. Turn off Wi-Fi and it still works.</p></details>
+        <details><summary>How big can the file be?</summary><p>Tens of gigabytes. The limit is your disk, not Excel.</p></details>
+        <details><summary>Will it change my data?</summary><p>No. Every value stays exactly as written in the file.</p></details>
+      </div>
+    </section>
+  </div>
+  <footer><div class="wrap"><div class="big">MegaCSV</div><div class="row"><span>Free CSV viewer for files too big for Excel</span><span>* Placeholder figure, to be measured before launch</span></div></div></footer>
+</div>
+
+<div class="app">
+  <div class="appbar">
+    <button class="iconbtn" data-action="home" aria-label="Back to home"><svg class="icon"><use href="#i-back"/></svg></button>
+    <div class="t"><span style="margin:0;color:var(--ink);font-size:18px;font-weight:800" data-filename>transactions_2026_Q3.csv</span><span>6.2 GB</span></div><span class="sp"></span>
+    <label class="find"><svg class="icon"><use href="#i-search"/></svg><input data-find placeholder="Find in the whole file" /><span class="hits" data-hits></span><kbd>⌘F</kbd></label>
+    <button class="btn"><svg class="icon"><use href="#i-cols"/></svg>Columns</button>
+    <button class="btn primary"><svg class="icon"><use href="#i-down"/></svg>Export to Excel</button>
+    <button class="iconbtn" data-action="theme" aria-label="Switch light or dark"><svg class="icon"><use href="#i-theme"/></svg></button>
+  </div>
+  <div class="lane">
+    <div class="tag a"><span>Rows in file</span><b data-count-app="48273485">0</b></div>
+    <div class="tag b"><span>Rows matching</span><b data-count-app="12408">0</b></div>
+    <div class="tag f">Show rows where <u>vendor</u> contains “Acme” and <u>posted_date</u> is in Q3 2026</div>
+    <span class="sp"></span>
+  </div>
+  <div class="sheet"><div class="scroller"><table data-grid></table></div></div>
+  <div class="status"><span>Row 18,402,116</span><span>Fits in one Excel sheet</span><span class="sp"></span><span>Nothing uploaded</span></div>
+</div>
+
+<div class="loader"><div class="box"><div class="n" data-loading-count>0</div><p>cards read from <span data-filename>transactions_2026_Q3.csv</span></p><div class="bar"><i data-progress></i></div></div></div>
+<div class="dropveil">Drop to open</div>
+<script src="shared.js"></script>
+<script>
+// Hollerith punch codes for the printed row; holes punch in column by column
+const ROWS = ["12", "11", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+const code = (ch) => {
+  if (/[0-9]/.test(ch)) return [ch];
+  if (ch >= "A" && ch <= "I") return ["12", String(ch.charCodeAt(0) - 64)];
+  if (ch >= "J" && ch <= "R") return ["11", String(ch.charCodeAt(0) - 73)];
+  if (ch >= "S" && ch <= "Z") return ["0", String(ch.charCodeAt(0) - 81)];
+  if (ch === ",") return ["0", "3", "8"];
+  if (ch === "-") return ["11"];
+  if (ch === ".") return ["12", "3", "8"];
+  return [];
+};
+const text = "TX-090412121,2026-08-03,SOYLENT FOODS,6200 FREIGHT,14298.70,EUR,POSTED".padEnd(80).slice(0, 80);
+const holes = document.getElementById("holes");
+const cells = [];
+ROWS.forEach((r) => { for (let c = 0; c < 80; c++) { const i = document.createElement("i"); i.textContent = r === "12" || r === "11" ? "" : r; holes.appendChild(i); cells.push({ i, r, c }); } });
+cells.forEach(({ i, r, c }) => { if (code(text[c]).includes(r)) { i.classList.add("p"); i.style.animationDelay = c * 18 + "ms"; } });
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MegaCSV design directions</title>
+<style>
+body { font-family: system-ui, sans-serif; background: #101010; color: #eee; margin: 0; padding: 40px; }
+h1 { font-size: 28px; margin: 0 0 6px; letter-spacing: -0.02em; }
+p.sub { color: #9a9a9a; margin: 0 0 32px; max-width: 80ch; line-height: 1.5; }
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+a.card { color: inherit; text-decoration: none; background: #1a1a1a; border-radius: 16px; overflow: hidden; display: block; transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1); }
+a.card:active { transform: scale(0.99); }
+.pics { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: #000; }
+.pics img { width: 100%; display: block; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+.txt { padding: 16px 18px 20px; }
+.txt b { font-size: 18px; }
+.txt span { display: block; color: #a8a8a8; margin-top: 6px; line-height: 1.5; font-size: 14px; }
+</style>
+</head>
+<body>
+<h1>MegaCSV: 8 design directions</h1>
+<p class="sub">Click one to try it. Each has a home page and the view after a file opens: click “Try a sample file”, or drop any CSV on the page. The round icon switches light and dark. Inside a file, type in “Find” to see matches highlighted. Left picture: home page (dark). Right picture: file open (light).</p>
+<div class="grid">
+  <a class="card" href="09-quiet-office.html" style="grid-column:1/-1"><div class="pics"><img src="shots/09-quiet-office-home-dark.png" alt="" /><img src="shots/09-quiet-office-app.png" alt="" /></div><div class="txt"><b>9 · Quiet office (5 + 6 combined)</b><span>Home page from Quiet instrument: calm narrow column, one blue accent, with a small preview of the real app. The app uses Familiar office's layout (big buttons, formula bar, column letters, sheet tabs) in the same quiet colours, with the plain-sentence filter above the grid.</span></div></a>
+  <a class="card" href="01-monochrome.html"><div class="pics"><img src="shots/01-monochrome-home-dark.png" alt="" /><img src="shots/01-monochrome-app.png" alt="" /></div><div class="txt"><b>1 · Monochrome</b><span>Black and white with one orange accent, in Vercel/shadcn and rare-ui style. The live sample file sits under the headline. Export panel on the right. The safe, polished option.</span></div></a>
+  <a class="card" href="02-departure-board.html"><div class="pics"><img src="shots/02-departure-board-home-dark.png" alt="" /><img src="shots/02-departure-board-app.png" alt="" /></div><div class="txt"><b>2 · Departure board</b><span>Split-flap letters flip into place. Files are listed like arrivals with a status lamp. Row counts flip on open. The loudest and most memorable; dark by default.</span></div></a>
+  <a class="card" href="03-green-bar.html"><div class="pics"><img src="shots/03-green-bar-home-dark.png" alt="" /><img src="shots/03-green-bar-app.png" alt="" /></div><div class="txt"><b>3 · Green-bar printout</b><span>Old green-and-white printer paper with sprocket holes, a nod to finance's big data dumps. The hero tears off at row 1,048,576: “Excel stops here.” Filters read as one sentence.</span></div></a>
+  <a class="card" href="04-swiss-poster.html"><div class="pics"><img src="shots/04-swiss-poster-home-dark.png" alt="" /><img src="shots/04-swiss-poster-app.png" alt="" /></div><div class="txt"><b>4 · Swiss poster</b><span>A huge headline with a live row counter set inside it, in strict grid, black, white and red. Big row counts sit above the grid in the file view.</span></div></a>
+  <a class="card" href="05-quiet-instrument.html"><div class="pics"><img src="shots/05-quiet-instrument-home-dark.png" alt="" /><img src="shots/05-quiet-instrument-app.png" alt="" /></div><div class="txt"><b>5 · Quiet instrument</b><span>Calm, one narrow column, very little decoration, one blue accent. Filters are written as a sentence (“Show rows where vendor contains Acme…”). Export sits in a dark bar at the bottom.</span></div></a>
+  <a class="card" href="06-familiar-office.html"><div class="pics"><img src="shots/06-familiar-office-home-dark.png" alt="" /><img src="shots/06-familiar-office-app.png" alt="" /></div><div class="txt"><b>6 · Familiar office</b><span>Feels like home to Excel users: a ribbon of big buttons, a formula bar, column letters, and sheet tabs at the bottom (“Acme Q3 · 12,408 rows”). Teal, not Excel green. The most familiar.</span></div></a>
+  <a class="card" href="07-cobalt-counter.html"><div class="pics"><img src="shots/07-cobalt-counter-home-dark.png" alt="" /><img src="shots/07-cobalt-counter-app.png" alt="" /></div><div class="txt"><b>7 · Cobalt counter</b><span>The whole page is bold cobalt blue. A giant rolling row counter, plus a ruler you drag to set your file size and see the rows and the time to open. Based on rare-ui's counter.</span></div></a>
+  <a class="card" href="08-punch-card.html"><div class="pics"><img src="shots/08-punch-card-home-dark.png" alt="" /><img src="shots/08-punch-card-app.png" alt="" /></div><div class="txt"><b>8 · Punch card</b><span>“One row is one card.” A real punch card whose holes encode an actual row, stamping in when the page loads. Warm and playful, with pink, mint and periwinkle cards.</span></div></a>
+</div>
+</body>
+</html>
